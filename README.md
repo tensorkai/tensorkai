@@ -19,12 +19,12 @@
 
 </div>
 
-**>_ Full-Stack Developer and Hardware Integrator** - focusing on AI, SaaS, B2C, and embedded systems<br/>
+**>_ Full-Stack AI and ML Developer** - focusing on AI, SaaS, B2C, and embedded systems<br/>
 **>_ ECE Student at PUP Sta. Mesa,** turning coursework into shipped prototypes<br/>
 **>_ AI & Edge AI Product Integrator** — getting models running on real, constrained hardware<br/>
 **>_ Builder of Things:** Prototyping NodeMCU robotics, MATLAB virtual labs, and IoT automated systems<br/>
 **>_ Python & C++** for data, pipelines, ML experimentation, and microcontrollers<br/>
-**>_ TypeScript** for the product surfaces the models live behind<br/>
+**>_ TS, JS, Flutter, and Dart** for the product surfaces the models live behind<br/>
 **>_ Outside of engineering, I run an art sideline making portraits and landscapes**<br/>
 **>_ Obsessed with the gap between "the model works" and "the product works"**<br/>
 
@@ -40,6 +40,8 @@
 <br/><br/>
 <img src="https://img.shields.io/badge/JavaScript-141414?style=flat-square&logo=javascript&logoColor=F7DF1E" />
 <img src="https://img.shields.io/badge/TypeScript-141414?style=flat-square&logo=typescript&logoColor=3178C6" />
+<img src="https://img.shields.io/badge/Flutter-141414?style=flat-square&logo=flutter&logoColor=3178C6" />
+<img src="https://img.shields.io/badge/Dart-141414?style=flat-square&logo=dart&logoColor=3178C6" />
 <img src="https://img.shields.io/badge/React-141414?style=flat-square&logo=react&logoColor=61DAFB" />
 <img src="https://img.shields.io/badge/Next.js-141414?style=flat-square&logo=nextdotjs&logoColor=white" />
 <img src="https://img.shields.io/badge/Vue.js-141414?style=flat-square&logo=vuedotjs&logoColor=4FC08D" />
