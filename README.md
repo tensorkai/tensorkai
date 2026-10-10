@@ -1,5 +1,6 @@
 <p align="center">
-  <img src="./assets/contribution-orbit.svg" width="100%" alt="TENSORKAI / Contribution Observatory" />
+  <a href="./assets/contribution-orbit.svg"><img src="./assets/contribution-orbit.svg" width="70%" alt="TENSORKAI / Contribution Observatory" /></a>
+  <a href="https://github.com/tensorkai"><img src="https://github.com/tensorkai.png" width="28%" style="border-radius: 50%" alt="Benedict Fusin" /></a>
 </p>
 
 <div align="center">
