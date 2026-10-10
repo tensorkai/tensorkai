@@ -1,0 +1,50 @@
+name: Update contribution observatory
+on:
+  schedule:
+    # 09:17 Manila / 01:17 UTC; GitHub may delay scheduled jobs.
+    - cron: '17 1 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/activity.mjs'
+      - 'scripts/update-activity.mjs'
+      - 'scripts/activity.test.mjs'
+      - '.github/workflows/contribution-observatory.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contribution-observatory
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Check the contribution engine
+        run: node --test scripts/activity.test.mjs
+      - name: Read public calendar and render artwork
+        env:
+          PROFILE_USERNAME: tensorkai
+        run: node scripts/update-activity.mjs
+      - name: Save the new snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/contribution-orbit.svg data/contributions.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "chore: refresh contribution observatory"
+          git pull --rebase origin main
+          git push origin HEAD:main
