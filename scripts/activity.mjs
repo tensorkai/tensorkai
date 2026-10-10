@@ -92,7 +92,7 @@ export function renderObservatory({username, days, fetchedAt, avatarData}) {
   return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="964" viewBox="0 0 1200 964" role="img" aria-labelledby="title description">\n'+
   '<title id="title">'+escapeXml(username.toUpperCase()+' / Contribution Observatory')+'</title><desc id="description">'+escapeXml(description)+'</desc>\n'+
   '<style>text{font-kerning:normal}.sweep{transform-origin:345px 435px;animation:orbit 24s linear infinite}.echo{opacity:.15;animation:echo 24s linear infinite}.calendar-scan{animation:readout 24s linear infinite}@keyframes orbit{to{transform:rotate(360deg)}}@keyframes echo{0%,4%{opacity:1}10%,100%{opacity:.15}}@keyframes readout{from{transform:translateX(0)}to{transform:translateX('+((latestCol+1)*19.8).toFixed(1)+'px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}.echo{opacity:.5}.sweep,.calendar-scan{display:none}}</style>\n'+
-  '<defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#1c2a22" stroke-width=".7"/></pattern><linearGradient id="beam"><stop stop-color="'+copper+'" stop-opacity="0"/><stop offset="1" stop-color="'+copper+'" stop-opacity=".5"/></linearGradient><clipPath id="calendar-clip"><rect x="87" y="752" width="'+((latestCol+1)*19.8+4).toFixed(1)+'" height="130"/></clipPath><clipPath id="profile-clip"><circle cx="940" cy="410" r="170"/></clipPath></defs>'+
+  '<defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#1c2a22" stroke-width=".7"/></pattern><linearGradient id="beam"><stop stop-color="'+copper+'" stop-opacity="0"/><stop offset="1" stop-color="'+copper+'" stop-opacity=".5"/></linearGradient><clipPath id="calendar-clip"><rect x="87" y="752" width="'+((latestCol+1)*19.8+4).toFixed(1)+'" height="130"/></clipPath></defs>'+
   '<rect width="1200" height="964" fill="'+ink+'"/><rect width="1200" height="698" fill="url(#grid)"/><rect width="6" height="964" fill="'+copper+'"/>'+
   label(48,44,'FIELD NOTES / BENEDICT FUSIN',paper)+label(1152,44,'GENERATED FROM GITHUB ACTIVITY',copper,'text-anchor="end"')+
   text(43,128,username.toUpperCase(),84,paper,'font-weight="900" letter-spacing="-4"')+
@@ -105,7 +105,8 @@ export function renderObservatory({username, days, fetchedAt, avatarData}) {
   text(345,463,'365',76,paper,'text-anchor="middle" font-weight="700" letter-spacing="-3"')+
   label(345,494,'DAYS IN THE MAKING',muted,'text-anchor="middle"')+
   '</g>'+
-  '<g clip-path="url(#profile-clip)"><image x="770" y="240" width="340" height="340" href="'+(avatarData || ('https://github.com/'+username+'.png'))+'" xlink:href="'+(avatarData || ('https://github.com/'+username+'.png'))+'" preserveAspectRatio="xMidYMid slice"/></g>'+
+  '<defs><pattern id="profile-pattern" patternUnits="userSpaceOnUse" x="770" y="240" width="340" height="340"><image href="'+(avatarData || ('https://github.com/'+username+'.png'))+'" xlink:href="'+(avatarData || ('https://github.com/'+username+'.png'))+'" x="0" y="0" width="340" height="340" preserveAspectRatio="xMidYMid slice"/></pattern></defs>'+
+  '<circle cx="940" cy="410" r="170" fill="url(#profile-pattern)"/>'+
   label(48,715,'THE DAILY TRANSMISSION',paper)+label(1152,715,days[0].date+' → '+days.at(-1).date,muted,'text-anchor="end"')+
   monthLabels.join('')+['S','M','T','W','T','F','S'].map((d,i)=>label(53,769+i*18,d)).join('')+calendar+
   '<g clip-path="url(#calendar-clip)"><rect class="calendar-scan" x="87" y="752" width="17" height="130" fill="'+paper+'" opacity=".13"/></g>'+
