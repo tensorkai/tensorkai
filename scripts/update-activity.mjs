@@ -21,7 +21,18 @@ if(offline){
   snapshot={username,source,fetchedAt,days};
 }
 // Validate and render before touching the last successful snapshot.
-const art=renderObservatory(snapshot);
+let avatarData = '';
+try {
+  const avatarResponse = await fetch(`https://github.com/${snapshot.username}.png`, {signal:AbortSignal.timeout(30000)});
+  if (avatarResponse.ok) {
+    const buffer = await avatarResponse.arrayBuffer();
+    const mime = avatarResponse.headers.get('content-type') || 'image/png';
+    avatarData = `data:${mime};base64,${Buffer.from(buffer).toString('base64')}`;
+  }
+} catch(e) {
+  console.warn('Could not fetch avatar', e);
+}
+const art=renderObservatory({...snapshot, avatarData});
 await mkdir(file('data/'),{recursive:true});
 await mkdir(file('assets/'),{recursive:true});
 await writeFile(file('assets/contribution-orbit.svg.tmp'),art);

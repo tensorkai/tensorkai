@@ -53,7 +53,7 @@ export function summarize(days) {
   return {total, active, longest, peak, latest:days.at(-1)};
 }
 
-export function renderObservatory({username, days, fetchedAt}) {
+export function renderObservatory({username, days, fetchedAt, avatarData}) {
   const s=summarize(days);
   const ink='#111a17', paper='#f2efe6', muted='#a8b8a8', copper='#f38c61';
   const colors=['#24332c','#476447','#769656','#b4ca7b','#f38c61'];
@@ -105,7 +105,7 @@ export function renderObservatory({username, days, fetchedAt}) {
   text(345,463,'365',76,paper,'text-anchor="middle" font-weight="700" letter-spacing="-3"')+
   label(345,494,'DAYS IN THE MAKING',muted,'text-anchor="middle"')+
   '</g>'+
-  '<g clip-path="url(#profile-clip)"><image x="770" y="240" width="340" height="340" href="https://github.com/'+username+'.png" preserveAspectRatio="xMidYMid slice"/></g>'+
+  '<g clip-path="url(#profile-clip)"><image x="770" y="240" width="340" height="340" href="'+(avatarData || ('https://github.com/'+username+'.png'))+'" preserveAspectRatio="xMidYMid slice"/></g>'+
   label(48,715,'THE DAILY TRANSMISSION',paper)+label(1152,715,days[0].date+' → '+days.at(-1).date,muted,'text-anchor="end"')+
   monthLabels.join('')+['S','M','T','W','T','F','S'].map((d,i)=>label(53,769+i*18,d)).join('')+calendar+
   '<g clip-path="url(#calendar-clip)"><rect class="calendar-scan" x="87" y="752" width="17" height="130" fill="'+paper+'" opacity=".13"/></g>'+
