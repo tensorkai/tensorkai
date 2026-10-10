@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="228" viewBox="0 0 1200 228" role="img" aria-labelledby="title desc">
+<title id="title">From observation to a working product</title><desc id="desc">Observe, model, build, ship. A returning signal connects the last step to the first.</desc>
+<style>text{font-kerning:normal}.transmit{animation:transmit 9s linear infinite}@keyframes transmit{from{stroke-dashoffset:24}to{stroke-dashoffset:-1056}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<rect width="1200" height="228" fill="#202723"/>
+<text x="48" y="32" font-family="'Courier New',monospace" font-size="13" letter-spacing="1.2" fill="#bdc5b3" >THE WORKING LOOP</text>
+<path d="M60 68H1140" fill="none" stroke="#55604f"/>
+<path class="transmit" d="M60 68H1140" fill="none" stroke="#f89b70" stroke-width="2" stroke-dasharray="24 1056"/>
+<circle cx="60" cy="68" r="12" fill="#202723" stroke="#a1ad96"/>
+<text x="60" y="72" font-family="Arial,sans-serif" font-size="10" fill="#f4eee1" text-anchor="middle">01</text>
+<text x="48" y="123" font-family="Arial,sans-serif" font-size="32" fill="#f2efe6" font-weight="700" letter-spacing="-1">Observe.</text>
+<text x="48" y="151" font-family="Arial,sans-serif" font-size="17" fill="#c3cabb" >Start with the problem.</text>
+<circle cx="354" cy="68" r="12" fill="#202723" stroke="#a1ad96"/>
+<text x="354" y="72" font-family="Arial,sans-serif" font-size="10" fill="#f4eee1" text-anchor="middle">02</text>
+<text x="342" y="123" font-family="Arial,sans-serif" font-size="32" fill="#f2efe6" font-weight="700" letter-spacing="-1">Model.</text>
+<text x="342" y="151" font-family="Arial,sans-serif" font-size="17" fill="#c3cabb" >Give the idea a shape.</text>
+<circle cx="648" cy="68" r="12" fill="#202723" stroke="#a1ad96"/>
+<text x="648" y="72" font-family="Arial,sans-serif" font-size="10" fill="#f4eee1" text-anchor="middle">03</text>
+<text x="636" y="123" font-family="Arial,sans-serif" font-size="32" fill="#f2efe6" font-weight="700" letter-spacing="-1">Build.</text>
+<text x="636" y="151" font-family="Arial,sans-serif" font-size="17" fill="#c3cabb" >Meet the constraints.</text>
+<circle cx="942" cy="68" r="12" fill="#202723" stroke="#a1ad96"/>
+<text x="942" y="72" font-family="Arial,sans-serif" font-size="10" fill="#f4eee1" text-anchor="middle">04</text>
+<text x="930" y="123" font-family="Arial,sans-serif" font-size="32" fill="#f2efe6" font-weight="700" letter-spacing="-1">Ship.</text>
+<text x="930" y="151" font-family="Arial,sans-serif" font-size="17" fill="#c3cabb" >Put it in human hands.</text>
+<path d="M1140 172v23H60v-16m-5 5 5-5 5 5" fill="none" stroke="#73816c"/>
+<rect x="453" y="184" width="294" height="22" fill="#202723"/>
+<text x="600" y="200" font-family="'Courier New',monospace" font-size="13" letter-spacing="1.2" fill="#f89b70" text-anchor="middle">LEARN. REFINE. RETURN.</text>
+</svg>

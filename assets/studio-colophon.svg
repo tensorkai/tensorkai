@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="206" viewBox="0 0 1200 206" role="img" aria-labelledby="title desc">
+<title id="title">Ship it where it actually has to run.</title><desc id="desc">Benedict Fusin / TENSORKAI. Code, circuits, canvas.</desc>
+<style>text{font-kerning:normal}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<rect width="1200" height="206" fill="#f2efe6"/><rect width="8" height="206" fill="#d54b25"/>
+<text x="48" y="39" font-family="'Courier New',monospace" font-size="13" letter-spacing="1.2" fill="#d54b25" >A NOTE TO BUILD BY</text>
+<text x="46" y="99" font-family="Arial,sans-serif" font-size="43" fill="#202723" font-weight="700" letter-spacing="-1.5">Ship it where it actually has to run.</text>
+<path d="M48 134H1152" stroke="#c1c2b5"/>
+<text x="48" y="171" font-family="'Courier New',monospace" font-size="13" letter-spacing="1.2" fill="#202723" >BENEDICT FUSIN / TENSORKAI</text>
+<text x="1152" y="171" font-family="'Courier New',monospace" font-size="13" letter-spacing="1.2" fill="#62685e" text-anchor="end">CODE · CIRCUITS · CANVAS</text>
+<path d="M1070 85h66m-18-18 18 18-18 18" fill="none" stroke="#d54b25" stroke-width="3"/>
+</svg>
