@@ -1,8 +1,9 @@
 <p align="center">
-  <img src="./assets/signal-studio.svg" width="100%" alt="TENSORKAI — Benedict Fusin. From signal to something that ships. AI, edge systems, and an artist's intuition." />
+  <img src="./assets/contribution-orbit.svg" width="100%" alt="TENSORKAI / Contribution Observatory. A year of real daily GitHub activity, rendered as an animated orbit and calendar. Each spoke and square represents one day." />
 </p>
 
 <p align="center">
+  <a href="./assets/contribution-orbit.svg">Explore the orbit</a> &nbsp; / &nbsp;
   <a href="#01--the-person-behind-the-signal">The person</a> &nbsp; / &nbsp;
   <a href="#02--on-the-workbench">The workbench</a> &nbsp; / &nbsp;
   <a href="#03--tools-follow-the-problem">The tools</a> &nbsp; / &nbsp;
@@ -74,10 +75,12 @@ I'm open to hands-on collaborations in **AI products, edge inference, and embedd
 </p>
 
 <details>
-<summary>About the signal sculpture</summary>
+<summary>How the observatory stays alive</summary>
 
-The contour in the cover is drawn from a seed made from **TENSORKAI / BENEDICT FUSIN**. Its nested paths bring together a signal trace, a circuit, and the contour lines of a drawing. The small marks beneath it encode `TENSORKAI` in binary.
+This cover is drawn from my **actual daily GitHub contributions**. Each spoke is a day; longer spokes mean more activity. The scan replays the year clockwise, and the calendar below preserves every date. Quiet days stay quiet.
 
-All artwork lives in this repository. The SVGs use gentle CSS animation, respect reduced-motion preferences, and remain complete as still images. To regenerate them, run `node scripts/generate-art.mjs`.
+The totals, active days, longest streak, and peak day all come from the same 365-day window. The timestamp shows when the snapshot was fetched. The animation is a replay, not a live event feed.
+
+A daily GitHub Actions workflow regenerates the artwork from my public calendar. Everything is stored in this repository, including the [daily data](./data/contributions.json), [generator](./scripts/activity.mjs), and [refresh instructions](./scripts/README.md). Reduced-motion preferences are respected.
 
 </details>
