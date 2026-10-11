@@ -1,3 +1,4 @@
+
 // Contribution Observatory: dependency-free data validation and SVG rendering.
 const DAY = 86_400_000;
 export const escapeXml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
