@@ -1,5 +1,7 @@
+# TENSORKAI
+
 <p align="center">
-  <img src="./assets/contribution-orbit.svg" width="100%" alt="TENSORKAI / Contribution Observatory" />
+  <img src="https://github.com/tensorkai.png?size=200" width="160" height="160" alt="Benedict Fusin" />
 </p>
 
 <div align="center">
@@ -8,6 +10,32 @@
 </div>
 
 ---
+
+<!-- CONTRIBUTIONS:START -->
+
+### GitHub contributions
+
+| Past 365 days | Active days | Longest streak | Past 30 days | Past 7 days |
+| ---: | ---: | ---: | ---: | ---: |
+| 957 | 94 | 10 days | 255 | 119 |
+
+| Date (UTC) | Contributions |
+| --- | ---: |
+| 2026-10-12 | 21 |
+| 2026-10-11 | 21 |
+| 2026-10-10 | 28 |
+| 2026-10-09 | 1 |
+| 2026-10-08 | 23 |
+| 2026-10-07 | 24 |
+| 2026-10-06 | 1 |
+
+Period: 2025-10-13 to 2026-10-12. The current day is still in progress.
+
+Last refreshed: **2026-10-12 22:50:15 UTC**. Scheduled to refresh hourly; GitHub may delay runs.
+
+[View GitHub contribution calendar](https://github.com/tensorkai#year-list-container) · [Update history](https://github.com/tensorkai/tensorkai/actions/workflows/contribution-observatory.yml)
+
+<!-- CONTRIBUTIONS:END -->
 
 I build across the space between a model, a microcontroller, and the person using the product. As an Electronics Engineering student at **PUP Sta. Mesa** and an AI & Edge AI Product Integrator at **Loompoint AI**, my work moves between applied ML, full-stack software, and embedded systems. I get ideas out of the notebook and into the conditions where they actually have to run.
 
@@ -59,20 +87,10 @@ My center of gravity is **Python + C++** for models, pipelines, and hardware; **
 
 <br/>
 
-<p align="center">
-  <img src="./assets/signal-path.svg" width="100%" alt="My working loop" />
-</p>
+**My working loop:** Observe → build → test → refine → ship.
 
 <p align="center">
   <b><a href="mailto:benedictfusin99@gmail.com">Leave a signal ↗</a></b> &nbsp; // &nbsp; <b><a href="https://github.com/tensorkai?tab=repositories">Explore the repositories ↗</a></b>
 </p>
 
-<p align="center">
-  <img src="./assets/studio-colophon.svg" width="100%" alt="Ship it where it actually has to run. Benedict Fusin / TENSORKAI — code, circuits, canvas." />
-</p>
-
-<details>
-<summary>How the observatory stays alive</summary>
-
-This cover is drawn from my actual daily GitHub contributions using a custom GitHub Actions workflow. Everything is stored in this repository, including the generator script and automated refresh instructions. Reduced-motion preferences are respected.
-</details>
+*Ship it where it actually has to run. Code, circuits, canvas.*

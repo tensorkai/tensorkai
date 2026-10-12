@@ -1,12 +1,13 @@
-name: Update contribution observatory
+name: Update contribution summary
 on:
   schedule:
-    # 09:17 Manila / 01:17 UTC; GitHub may delay scheduled jobs.
-    - cron: '17 1 * * *'
+    # Hourly, away from the busy start of the hour. GitHub may delay runs.
+    - cron: '17 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
     paths:
+      - 'README.md'
       - 'scripts/activity.mjs'
       - 'scripts/update-activity.mjs'
       - 'scripts/activity.test.mjs'
@@ -20,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  render:
+  update:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -31,20 +32,30 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - name: Check the contribution engine
-        run: node --test scripts/activity.test.mjs
-      - name: Read public calendar and render artwork
+      - name: Refresh and publish the README summary
         env:
           PROFILE_USERNAME: tensorkai
-        run: node scripts/update-activity.mjs
-      - name: Save the new snapshot
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/contribution-orbit.svg data/contributions.json
-          if git diff --cached --quiet; then
-            exit 0
-          fi
-          git commit -m "chore: refresh contribution observatory"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3; do
+            # Regenerate on current main in this disposable runner instead of
+            # rebasing generated files over somebody else's README edits.
+            git fetch origin main
+            git checkout --detach origin/main
+            node --test scripts/activity.test.mjs
+            node scripts/update-activity.mjs
+            git add README.md data/contributions.json
+            if git diff --cached --quiet; then
+              exit 0
+            fi
+            git commit -m "chore: refresh contribution summary"
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "Could not publish the summary after three attempts." >&2
+          exit 1
