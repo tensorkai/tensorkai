@@ -18,7 +18,15 @@ if(offline){
   const input=parseCalendar(await response.text());
   const endDate=fetchedAt.slice(0,10);
   const days=normalizeDays(input,endDate);
-  snapshot={username,source,fetchedAt,days};
+  const avatarSource='https://github.com/'+username+'.png?size=400';
+  const avatarResponse=await fetch(avatarSource,{headers:{'User-Agent':'Contribution-Observatory','Accept':'image/png,image/jpeg,image/webp'},signal:AbortSignal.timeout(30000)});
+  if(!avatarResponse.ok)throw new Error('GitHub profile image request failed: HTTP '+avatarResponse.status);
+  const avatarType=avatarResponse.headers.get('content-type')?.split(';')[0].trim();
+  if(!['image/png','image/jpeg','image/webp'].includes(avatarType))throw new Error('Unexpected profile image content type: '+avatarType);
+  const avatarBytes=Buffer.from(await avatarResponse.arrayBuffer());
+  if(!avatarBytes.length)throw new Error('GitHub returned an empty profile image');
+  const avatarDataUrl='data:'+avatarType+';base64,'+avatarBytes.toString('base64');
+  snapshot={username,source,fetchedAt,days,avatarSource,avatarDataUrl};
 }
 // Validate and render before touching the last successful snapshot.
 const art=renderObservatory(snapshot);

@@ -15,8 +15,12 @@ node scripts/update-activity.mjs
 The refresh fetches GitHub's public calendar, joins each dated cell to its exact tooltip count,
 validates 365 consecutive UTC calendar dates, and writes:
 
-- `data/contributions.json`: source URL, fetch timestamp, and exact daily counts.
-- `assets/contribution-orbit.svg`: the animated cover and daily calendar.
+- `data/contributions.json`: source URLs, fetch timestamp, exact daily counts, and embedded profile image.
+- `assets/contribution-orbit.svg`: the animated cover, profile photo, and daily calendar.
+
+Each online refresh also fetches the GitHub avatar and embeds its bytes as a data URL.
+SVGs displayed through README image tags cannot load external images, so the cover must
+contain the photo itself. Offline redraws reuse the photo saved in the snapshot.
 
 Missing dates or counts, malformed data, failed requests, and changed upstream markup fail the run
 before the existing snapshot is replaced. A visible fetch date makes stale artwork identifiable.

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {parseCalendar,normalizeDays,summarize,renderObservatory} from './activity.mjs';
+const avatarDataUrl='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a7V8AAAAASUVORK5CYII=';
 const makeDays=(end='2026-10-10')=>Array.from({length:365},(_,i)=>({date:new Date(Date.parse(end+'T00:00:00Z')-(364-i)*86400000).toISOString().slice(0,10),count:0}));
 test('public calendar joins tooltip counts by ID, not DOM order or intensity',()=>{
  const html='<td data-date="2026-10-10" id="b" data-level="1"></td><td data-date="2026-10-09" id="a"></td><tool-tip for="a">No contributions on October 9th.</tool-tip><tool-tip for="b">1,234 contributions on October 10th.</tool-tip>';
@@ -34,15 +35,25 @@ test('statistics count contributions, active days, and consecutive runs independ
  assert.deepEqual(s.peak,days[6]); assert.equal(s.latest.count,3);
 });
 test('zero-activity rendering stays finite and represents every day twice',()=>{
- const svg=renderObservatory({username:'tensorkai',days:makeDays(),fetchedAt:'2026-10-10T10:00:00Z'});
+ const svg=renderObservatory({username:'tensorkai',days:makeDays(),fetchedAt:'2026-10-10T10:00:00Z',avatarDataUrl});
  assert.equal((svg.match(/class="day-spoke"/g)||[]).length,365);
  assert.equal((svg.match(/class="calendar-day"/g)||[]).length,365);
  assert.doesNotMatch(svg,/NaN|Infinity/);
  assert.match(svg,/prefers-reduced-motion:reduce/);
 });
 test('SVG text escapes data and generation is deterministic for a snapshot',()=>{
- const data={username:'a<&"',days:makeDays(),fetchedAt:'2026-10-10T10:00:00Z'};
+ const data={username:'a<&"',days:makeDays(),fetchedAt:'2026-10-10T10:00:00Z',avatarDataUrl};
  const svg=renderObservatory(data);
  assert.doesNotMatch(svg,/a<&"/);
  assert.equal(svg,renderObservatory(data));
+});
+
+test('profile image is embedded for README image rendering and offline redraws',()=>{
+ const data={username:'tensorkai',days:makeDays(),fetchedAt:'2026-10-10T10:00:00Z',avatarDataUrl};
+ const svg=renderObservatory(JSON.parse(JSON.stringify(data)));
+ assert.ok(svg.includes('href="'+avatarDataUrl+'"'));
+ assert.doesNotMatch(svg,/<image\b[^>]*href="https?:/);
+ for(const invalid of [undefined,'','https://github.com/tensorkai.png','data:image/png;base64,']){
+  assert.throws(()=>renderObservatory({...data,avatarDataUrl:invalid}),/embedded profile image/);
+ }
 });
