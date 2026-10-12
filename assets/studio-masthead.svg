@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="480" viewBox="0 0 1280 480" role="img" aria-labelledby="title desc">
+  <title id="title">TENSORKAI — Code, circuits, canvas</title>
+  <desc id="desc">A static studio masthead for Benedict Fusin. Bold cream typography meets an orange circuit and contour drawing. From an idea to something that works.</desc>
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#f3eddb" stroke-opacity=".12" stroke-width="1"/></pattern>
+    <clipPath id="panel"><rect x="788" y="78" width="444" height="330" rx="2"/></clipPath>
+  </defs>
+  <rect width="1280" height="480" fill="#142a26"/>
+  <path d="M48 62H1232M48 421H1232" stroke="#63746a"/>
+  <g font-family="monospace" font-size="14" letter-spacing="2" fill="#f3eddb">
+    <text x="48" y="38">BENEDICT FUSIN / STUDIO NOTES</text>
+    <text x="1232" y="38" text-anchor="end">INDEPENDENT MIND. CONNECTED DISCIPLINES.</text>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="900" fill="#f3eddb" letter-spacing="-7">
+    <text x="42" y="191" font-size="136">TENSOR</text>
+    <text x="42" y="337" font-size="170">KAI<tspan fill="#ed8959">.</tspan></text>
+  </g>
+  <path d="M426 232H468M447 211V253" stroke="#ed8959" stroke-width="2"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#f3eddb">
+    <text x="426" y="291">From an idea</text>
+    <text x="426" y="324">to something</text>
+    <text x="426" y="357" font-weight="700">that works.</text>
+  </g>
+  <text x="48" y="391" font-family="monospace" font-size="14" letter-spacing="3" fill="#b4c3b6">CODE / CIRCUITS / CANVAS</text>
+  <rect x="788" y="78" width="444" height="330" rx="2" fill="#ed8959"/>
+  <g clip-path="url(#panel)">
+    <rect x="788" y="78" width="444" height="330" fill="url(#grid)"/>
+    <g fill="none" stroke="#142a26" stroke-width="1.4">
+      <path d="M815 153H877L921 197V277L972 328H1040"/>
+      <path d="M815 171H869L903 205V286L962 345H1040"/>
+      <path d="M815 189H861L885 213V294L952 363H1040"/>
+      <path d="M870 102V136L939 205V270L980 311H1040"/>
+      <path d="M891 102V128L957 194V263L988 294H1040"/>
+      <path d="M912 102V120L975 183V256L996 277H1040"/>
+    </g>
+    <g fill="#142a26">
+      <circle cx="815" cy="153" r="4"/><circle cx="815" cy="171" r="4"/><circle cx="815" cy="189" r="4"/>
+      <circle cx="870" cy="102" r="4"/><circle cx="891" cy="102" r="4"/><circle cx="912" cy="102" r="4"/>
+    </g>
+    <g transform="translate(1100 224) rotate(-25)" fill="none" stroke="#142a26" stroke-width="1.5">
+      <ellipse rx="100" ry="138"/><ellipse rx="88" ry="138"/><ellipse rx="75" ry="138"/>
+      <ellipse rx="60" ry="138"/><ellipse rx="43" ry="138"/><ellipse rx="24" ry="138"/>
+      <path d="M-100 0H100M-94-46H94M-94 46H94M-74-92H74M-74 92H74M0-138V138"/>
+    </g>
+    <circle cx="1100" cy="224" r="31" fill="#142a26"/>
+    <path d="M1087 224H1113M1100 211V237" stroke="#f3eddb" stroke-width="2"/>
+    <path d="M807 388H851M807 388V350M1213 98H1175M1213 98V136" fill="none" stroke="#142a26" stroke-width="2"/>
+  </g>
+  <g font-family="monospace" font-size="14" letter-spacing="1.5" fill="#f3eddb">
+    <text x="48" y="454"><tspan fill="#ed8959">01</tspan> THINK CLEARLY</text>
+    <text x="385" y="454"><tspan fill="#ed8959">02</tspan> BUILD WITH INTENT</text>
+    <text x="788" y="454"><tspan fill="#ed8959">03</tspan> SHIP INTO THE REAL WORLD</text>
+  </g>
+</svg>

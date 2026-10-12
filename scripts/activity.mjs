@@ -56,6 +56,16 @@ export function summarize(days) {
 export const START_MARKER = '<!-- CONTRIBUTIONS:START -->';
 export const END_MARKER = '<!-- CONTRIBUTIONS:END -->';
 
+export function renderPulse(days) {
+  const week = days.slice(-7);
+  const peak = Math.max(1, ...week.map(day => day.count));
+  return week.map(day => {
+    const filled = day.count === 0 ? 0 : Math.max(1, Math.round(day.count / peak * 18));
+    const weekday = new Date(day.date + 'T00:00:00Z').toLocaleDateString('en-US', {weekday: 'short', timeZone: 'UTC'});
+    return day.date.slice(5) + ' ' + weekday + '  ' + '█'.repeat(filled) + '░'.repeat(18 - filled) + '  ' + String(day.count).padStart(3);
+  }).join('\n');
+}
+
 export function renderSummary({username, days, fetchedAt}) {
   if (!/^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$/.test(username)) throw new Error('Invalid GitHub username');
   const fetched = new Date(fetchedAt);
@@ -64,20 +74,37 @@ export function renderSummary({username, days, fetchedAt}) {
   const s = summarize(validated);
   const recent = count => validated.slice(-count).reduce((total, day) => total + day.count, 0);
   const profile = 'https://github.com/' + username;
+  const card = (value, label, unit = '') => '<td width="33%" align="center"><sub>' + label + '</sub><h2>' + value + '</h2><sub>' + unit + '</sub></td>';
   return [
-    '### GitHub contributions',
+    '## 02 / The signal',
     '',
-    '| Past 365 days | Active days | Longest streak | Past 30 days | Past 7 days |',
-    '| ---: | ---: | ---: | ---: | ---: |',
-    '| ' + s.total + ' | ' + s.active + ' | ' + s.longest + ' days | ' + recent(30) + ' | ' + recent(7) + ' |',
+    'Work leaves a trace. Here is mine, refreshed from GitHub every hour.',
     '',
-    '| Date (UTC) | Contributions |',
-    '| --- | ---: |',
-    ...validated.slice(-7).reverse().map(day => '| ' + day.date + ' | ' + day.count + ' |'),
+    '<table width="100%">',
+    '<tr>' + card(s.total, 'PAST 365 DAYS', 'contributions') + card(s.active, 'DAYS ACTIVE', 'in the past 365 days') + card(s.longest, 'LONGEST STREAK', 'consecutive days in this window') + '</tr>',
+    '<tr>' + card(recent(30), 'PAST 30 DAYS', 'contributions') + card(recent(7), 'PAST 7 DAYS', 'contributions') + card(s.latest.count, 'LATEST UTC DAY', s.latest.date + ' · in progress') + '</tr>',
+    '</table>',
     '',
-    'Period: ' + validated[0].date + ' to ' + s.latest.date + '. The current day is still in progress.',
+    '**A week, in signals.** <sub>Daily contributions · UTC · bars relative to this week’s busiest day</sub>',
     '',
-    'Last refreshed: **' + fetched.toISOString().replace('T', ' ').slice(0, 19) + ' UTC**. Scheduled to refresh hourly; GitHub may delay runs.',
+    '```text',
+    renderPulse(validated),
+    '```',
+    '',
+    '<details>',
+    '<summary>The full readout ↗</summary>',
+    '',
+    '| Measurement | Reading |',
+    '| :--- | :--- |',
+    '| Window | ' + validated[0].date + ' → ' + s.latest.date + ' |',
+    '| Peak day | ' + s.peak.count + ' contributions · ' + s.peak.date + ' |',
+    '| Latest day | ' + s.latest.count + ' contributions · ' + s.latest.date + ' (still in progress) |',
+    '',
+    'Counts are GitHub contributions, not just commits. The graphic above is text rebuilt by the hourly workflow.',
+    '',
+    '</details>',
+    '',
+    '<sub>Last refreshed: <b>' + fetched.toISOString().replace('T', ' ').slice(0, 19) + ' UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>',
     '',
     '[View GitHub contribution calendar](' + profile + '#year-list-container) · ' +
       '[Update history](' + profile + '/' + username + '/actions/workflows/contribution-observatory.yml)',

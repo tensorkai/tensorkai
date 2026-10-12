@@ -4,7 +4,7 @@ import {mkdtemp, mkdir, copyFile, writeFile, readFile, rm} from 'node:fs/promise
 import {tmpdir} from 'node:os';
 import {join, resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
-import {parseCalendar,normalizeDays,summarize,renderSummary,updateReadme,START_MARKER,END_MARKER} from './activity.mjs';
+import {parseCalendar,normalizeDays,summarize,renderPulse,renderSummary,updateReadme,START_MARKER,END_MARKER} from './activity.mjs';
 const makeDays=(end='2026-10-10')=>Array.from({length:365},(_,i)=>({date:new Date(Date.parse(end+'T00:00:00Z')-(364-i)*86400000).toISOString().slice(0,10),count:0}));
 const snapshot=()=>({username:'tensorkai',days:makeDays(),fetchedAt:'2026-10-10T10:00:00Z'});
 
@@ -46,17 +46,34 @@ test('summary shows exact rolling totals, recent dates and UTC freshness without
  data.days.at(-2).count=2;
  data.days.at(-1).count=3;
  const markdown=renderSummary(data);
- assert.ok(markdown.includes('| 113 | 4 | 2 days | 13 | 5 |'));
- assert.ok(markdown.includes('| 2026-10-10 | 3 |\n| 2026-10-09 | 2 |'));
+ for(const [label,count] of [['PAST 365 DAYS',113],['DAYS ACTIVE',4],['LONGEST STREAK',2],['PAST 30 DAYS',13],['PAST 7 DAYS',5],['LATEST UTC DAY',3]]){
+  assert.ok(markdown.includes('<sub>'+label+'</sub><h2>'+count+'</h2>'));
+ }
+ assert.ok(markdown.includes('10-10 Sat  '+'█'.repeat(18)+'    3'));
+ assert.ok(markdown.includes('10-09 Fri  '+'█'.repeat(12)+'░'.repeat(6)+'    2'));
  assert.ok(markdown.includes('2026-10-10 10:00:00 UTC'));
  assert.doesNotMatch(markdown,/<img|<svg|!\[|data:image|animation/);
  assert.equal(renderSummary(JSON.parse(JSON.stringify(data))),markdown);
 });
 test('zero activity and invalid snapshots are handled explicitly',()=>{
- assert.ok(renderSummary(snapshot()).includes('| 0 | 0 | 0 days | 0 | 0 |'));
+ assert.equal((renderSummary(snapshot()).match(/<h2>0<\/h2>/g)||[]).length,6);
  assert.throws(()=>renderSummary({...snapshot(),username:'a<&"'}),/Invalid GitHub username/);
  assert.throws(()=>renderSummary({...snapshot(),fetchedAt:'bad'}),/timestamp/);
  assert.throws(()=>renderSummary({...snapshot(),days:makeDays().slice(1)}),/Incomplete/);
+});
+test('text pulse keeps seven dates in order and never invents activity for zero days',()=>{
+ const days=makeDays();
+ const zero=renderPulse(days);
+ assert.equal(zero.split('\n').length,7);
+ assert.doesNotMatch(zero,/█/);
+ days.at(-3).count=100;
+ days.at(-1).count=1;
+ const rows=renderPulse(days).split('\n');
+ assert.ok(rows[0].startsWith('10-04 Sun'));
+ assert.ok(rows[6].startsWith('10-10 Sat'));
+ assert.ok(rows[4].includes('█'.repeat(18)+'  100'));
+ assert.ok(rows[6].includes('█'+'░'.repeat(17)+'    1'));
+ for(const row of rows)assert.equal((row.match(/[█░]/g)||[]).length,18);
 });
 test('README refresh preserves handwritten content and is idempotent with either newline style',()=>{
  for(const nl of ['\n','\r\n']){
@@ -89,7 +106,7 @@ test('offline updater writes Markdown and preserves files on validation failure'
   const first=run();
   assert.equal(first.status,0,first.stderr);
   const output=await readFile(readmePath,'utf8');
-  assert.ok(output.includes('### GitHub contributions'));
+  assert.ok(output.includes('## 02 / The signal'));
   assert.ok(output.endsWith('Keep footer'));
   const saved=await readFile(dataPath,'utf8');
   assert.equal(JSON.parse(saved).avatarDataUrl,undefined);

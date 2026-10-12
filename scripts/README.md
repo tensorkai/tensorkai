@@ -1,8 +1,16 @@
 # Automatic contribution summary
 
-The profile README displays ordinary Markdown tables. The update process needs
-no animated graphics, SVG rendering, or profile-photo downloads. GitHub's native
-contribution calendar remains available on the profile.
+The profile README pairs a static studio masthead with an automatically refreshed
+contribution section: six metric cells, a seven-day text bar chart, and an expandable
+readout. The update process needs no image rendering or profile-photo downloads.
+GitHub's native contribution calendar remains available on the profile.
+
+`assets/studio-masthead.svg` is decorative, contains no contribution counts,
+scripts, external image references, or animation, and is never rewritten by the updater.
+The profile photo is a separate standard image. All live metrics and chart bars
+are generated as HTML/Markdown inside the contribution markers, so hourly refreshes
+preserve the surrounding design. The chart uses 18 text cells per day, scaled to
+the seven-day maximum; zero days have no filled cells and each row shows its exact count.
 
 ## How it updates
 
@@ -48,5 +56,5 @@ Dates and daily counts follow GitHub's UTC calendar. Counts are contributions, n
 just commits. The public HTML parser joins date cells to their exact tooltip
 counts; it fails if upstream markup changes rather than guessing from color levels.
 
-Old artwork in `assets/` and `scripts/generate-art.mjs` is unused by the profile
-and the automatic updater.
+Earlier artwork (`contribution-orbit.svg`, `signal-*.svg`, `studio-colophon.svg`)
+and `scripts/generate-art.mjs` is unused by the profile and the automatic updater.
