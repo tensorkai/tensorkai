@@ -98,7 +98,7 @@ export function renderSummary({username, days, fetchedAt}) {
     '| Peak day | ' + s.peak.count + ' contributions · ' + s.peak.date + ' |',
     '| Latest day | ' + s.latest.count + ' contributions · ' + s.latest.date + ' (still in progress) |',
     '',
-    'One square per UTC day; weeks in columns, Sunday–Saturday in rows. Green intensity: 0, 1–3, 4–9, 10–19, 20+ contributions. Blank cells fall outside the window. The white scanner and violet trail are decorative. Counts include GitHub contributions, not just commits.',
+    'One square per UTC day; weeks in columns, Sunday–Saturday in rows. Green intensity: 0, 1–3, 4–9, 10–19, 20+ contributions. Blank cells fall outside the window. The blue scanner and its four-color trail are decorative. Counts include GitHub contributions, not just commits.',
     '',
     '<sub>Last refreshed: <b>' + fetched.toISOString().replace('T', ' ').slice(0, 19) + ' UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>',
     '',

@@ -1,14 +1,17 @@
 # Code / Circuits / Canvas
 
-A compact profile with an original microchip-and-brushstroke masthead and a
-GitHub-style contribution grid. The stack has three labeled rows: Frontend,
-Backend, and AI and Machine Learning. Each technology uses a recognizable logo
-and a name. Logos are embedded from local SVG files in `assets/logos`; that
-directory includes pinned source URLs and upstream licenses from Devicon and
-Simple Icons. No image
-services, fonts, packages, or personal tokens are required. Desktop and mobile
+A compact profile in a Google-inspired (Material 3) visual language: a
+four-color `tensorkai` wordmark, a search-bar hero, tonal surface cards, pill
+chips, and layered geometric shapes (microchip, paint sweep, sparkle). Every SVG
+switches between light and dark palettes with `prefers-color-scheme`. The stack
+has three labeled rows: Frontend, Backend, and AI and Machine Learning. Each
+technology uses a recognizable logo on a white "app icon" disc and a name. Logos
+are embedded from local SVG files in `assets/logos`; that directory includes
+pinned source URLs and upstream licenses from Devicon and Simple Icons. No image
+services, fonts, packages, or personal tokens are required; Google Sans and
+Roboto are used when installed, with system fallbacks. Desktop and mobile
 mastheads have separate compositions; animation respects reduced motion.
-The stack has desktop and mobile layouts. A white scanner with violet afterimages
+The stack has desktop and mobile layouts. A blue scanner with a four-color trail
 travels through the contribution grid in a 24-second serpentine loop. Its route
 contains only calendar cells inside the saved window. The scanner is decorative;
 it never changes activity colors, counts, or positions. Reduced motion hides it.
