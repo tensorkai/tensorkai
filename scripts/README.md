@@ -1,60 +1,67 @@
-# Automatic contribution summary
+# Profile artwork and contribution observatory
 
-The profile README pairs a static studio masthead with an automatically refreshed
-contribution section: six metric cells, a seven-day text bar chart, and an expandable
-readout. The update process needs no image rendering or profile-photo downloads.
-GitHub's native contribution calendar remains available on the profile.
+The README leads with a four-discipline tech map, followed by a contribution
+observatory and the workbench. All artwork is stored in this repository; no badge
+or statistics-image service is needed. Desktop and mobile SVGs are selected by
+standard picture elements, with expandable text versions in the README.
 
-`assets/studio-masthead.svg` is decorative, contains no contribution counts,
-scripts, external image references, or animation, and is never rewritten by the updater.
-The profile photo is a separate standard image. All live metrics and chart bars
-are generated as HTML/Markdown inside the contribution markers, so hourly refreshes
-preserve the surrounding design. The chart uses 18 text cells per day, scaled to
-the seven-day maximum; zero days have no filled cells and each row shows its exact count.
+## Contribution design
 
-## How it updates
+- The circular calendar has exactly one mark per UTC day, oldest at the top,
+  moving clockwise. Length scales with the square root of the daily count.
+  Orange marks exceed 60% of the peak daily count; zero days are muted ticks.
+- Four readings show active days, longest streak, and 30-day and 7-day totals.
+- Seven daily bars have exact counts. The latest, incomplete UTC day is orange.
+- The desktop skyline groups consecutive seven-day blocks from the window start;
+  the final block contains one day. Bars use linear scales and zero values have
+  no filled activity bar. Weekly totals sum to the 365-day total.
+- Subtle decorative motion respects prefers-reduced-motion. Activity marks never
+  animate or imply extra contributions. SVGs have titles and descriptions, and
+  the README includes exact text totals and a seven-day text chart.
 
-`.github/workflows/contribution-observatory.yml` runs hourly at minute 17, when the
-README or updater changes on `main`, and through **Actions → Update contribution
-summary → Run workflow**. It fetches the public GitHub calendar, validates 365
-consecutive UTC dates and exact counts, and updates only the block between
-`CONTRIBUTIONS:START` and `CONTRIBUTIONS:END` plus `data/contributions.json`.
+## Hourly refresh
 
-The summary shows the past 365 days, recent totals, the last seven daily counts,
-and the last successful refresh time in UTC. An hourly refresh is scheduled,
-not a live connection from a reader's browser.
+`.github/workflows/contribution-observatory.yml` runs at minute 17 each hour,
+when the README or renderer changes on main, or through workflow_dispatch.
+It fetches the public GitHub calendar and validates 365 consecutive UTC dates
+and exact tooltip counts before generating any output. No personal token is needed.
 
-The built-in `GITHUB_TOKEN` commits as `github-actions[bot]`. These commits do not
-trigger another workflow run, and do not count as the profile owner's activity.
-No personal token or package dependencies are required. If another commit arrives
-during publication, the workflow regenerates from the latest main (up to three
-attempts) rather than merging generated output. Invalid responses or missing
-README markers fail without publishing partial changes.
+The workflow updates:
 
-Actions must be enabled and repository rules must allow the bot to push to main.
-GitHub may delay scheduled runs or disable schedules after 60 days of repository
-inactivity. Check the linked workflow runs and README timestamp if data looks stale.
-See [GitHub's schedule documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
-and [GITHUB_TOKEN event behavior](https://docs.github.com/en/actions/concepts/security/github_token).
+- The block between CONTRIBUTIONS:START and CONTRIBUTIONS:END in README.md.
+- data/contributions.json, the saved source snapshot.
+- assets/contribution-observatory.svg and its mobile variant.
 
-## Local checks and refresh
+The bot commits these outputs together. If main advances during publication,
+it regenerates from current main, up to three attempts. A failed fetch or invalid
+snapshot leaves the previous output in place. GitHub may delay scheduled jobs;
+the README and artwork display the last successful refresh timestamp.
 
-Requires Node.js 24:
+## Commands
+
+Requires Node.js 24, with no package dependencies:
 
 ```sh
 node --test scripts/activity.test.mjs
 node scripts/update-activity.mjs
 ```
 
-To rebuild the Markdown from saved counts without any network requests:
+Rebuild from saved counts without a network request:
 
 ```sh
 node scripts/update-activity.mjs --offline
 ```
 
-Dates and daily counts follow GitHub's UTC calendar. Counts are contributions, not
-just commits. The public HTML parser joins date cells to their exact tooltip
-counts; it fails if upstream markup changes rather than guessing from color levels.
+Rebuild both static tech maps after editing scripts/profile-art.mjs:
 
-Earlier artwork (`contribution-orbit.svg`, `signal-*.svg`, `studio-colophon.svg`)
-and `scripts/generate-art.mjs` is unused by the profile and the automatic updater.
+```sh
+node scripts/generate-stack.mjs
+```
+
+The updater preserves content outside its markers. The tests cover parsing,
+calendar gaps, invalid counts, leap days, rolling totals, accessible output,
+artwork/data agreement, weekly aggregation, deterministic output, and failure
+preservation in a temporary fixture repository.
+
+The masthead and working-loop artwork are static assets. Earlier unused artwork
+is retained; scripts/generate-art.mjs rebuilds the original studio artwork only.

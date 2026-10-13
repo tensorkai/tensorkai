@@ -1,4 +1,4 @@
-// Contribution Observatory: dependency-free data validation and Markdown rendering.
+// Contribution Observatory: dependency-free data validation and accessible readout.
 const DAY = 86_400_000;
 const attr = (tag, name) => tag.match(new RegExp('\\b' + name + '="([^"]*)"'))?.[1];
 
@@ -74,33 +74,39 @@ export function renderSummary({username, days, fetchedAt}) {
   const s = summarize(validated);
   const recent = count => validated.slice(-count).reduce((total, day) => total + day.count, 0);
   const profile = 'https://github.com/' + username;
-  const card = (value, label, unit = '') => '<td width="33%" align="center"><sub>' + label + '</sub><h2>' + value + '</h2><sub>' + unit + '</sub></td>';
   return [
-    '## 02 / The signal',
+    '## 02 / Contribution observatory',
     '',
-    'Work leaves a trace. Here is mine, refreshed from GitHub every hour.',
+    '**A year of making, drawn from the source.** Every mark is a day. Every bar is real activity.',
     '',
-    '<table width="100%">',
-    '<tr>' + card(s.total, 'PAST 365 DAYS', 'contributions') + card(s.active, 'DAYS ACTIVE', 'in the past 365 days') + card(s.longest, 'LONGEST STREAK', 'consecutive days in this window') + '</tr>',
-    '<tr>' + card(recent(30), 'PAST 30 DAYS', 'contributions') + card(recent(7), 'PAST 7 DAYS', 'contributions') + card(s.latest.count, 'LATEST UTC DAY', s.latest.date + ' · in progress') + '</tr>',
-    '</table>',
+    '<a href="' + profile + '#year-list-container">',
+    '<picture>',
+    '  <source media="(max-width: 640px)" srcset="./assets/contribution-observatory-mobile.svg" />',
+    '  <img src="./assets/contribution-observatory.svg" width="100%" alt="Contribution observatory: ' + s.total + ' contributions, ' + s.active + ' active days, ' + s.longest + '-day longest streak. Past 30 days: ' + recent(30) + '; past 7 days: ' + recent(7) + '. Full text readout below." />',
+    '</picture>',
+    '</a>',
     '',
-    '**A week, in signals.** <sub>Daily contributions · UTC · bars relative to this week’s busiest day</sub>',
+    '<details>',
+    '<summary>Read the numbers / accessible text version ↗</summary>',
+    '',
+    '| Measurement | Reading |',
+    '| :--- | :--- |',
+    '| Past 365 days | ' + s.total + ' contributions |',
+    '| Days active | ' + s.active + ' of 365 |',
+    '| Longest streak | ' + s.longest + ' consecutive days in this window |',
+    '| Past 30 days | ' + recent(30) + ' contributions |',
+    '| Past 7 days | ' + recent(7) + ' contributions |',
+    '| Window | ' + validated[0].date + ' → ' + s.latest.date + ' |',
+    '| Peak day | ' + s.peak.count + ' contributions · ' + s.peak.date + ' |',
+    '| Latest day | ' + s.latest.count + ' contributions · ' + s.latest.date + ' (still in progress) |',
+    '',
+    '**The past seven UTC days**',
     '',
     '```text',
     renderPulse(validated),
     '```',
     '',
-    '<details>',
-    '<summary>The full readout ↗</summary>',
-    '',
-    '| Measurement | Reading |',
-    '| :--- | :--- |',
-    '| Window | ' + validated[0].date + ' → ' + s.latest.date + ' |',
-    '| Peak day | ' + s.peak.count + ' contributions · ' + s.peak.date + ' |',
-    '| Latest day | ' + s.latest.count + ' contributions · ' + s.latest.date + ' (still in progress) |',
-    '',
-    'Counts are GitHub contributions, not just commits. The graphic above is text rebuilt by the hourly workflow.',
+    'Counts are GitHub contributions, not just commits. The circular calendar runs clockwise, oldest day at the top. Mark length uses a square-root scale; orange marks exceed 60% of the peak daily count. The weekly skyline groups consecutive seven-day blocks from the window start; the final block is partial. Daily and weekly bars use linear scales. Zero days have no activity bar.',
     '',
     '</details>',
     '',

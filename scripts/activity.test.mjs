@@ -5,6 +5,7 @@ import {tmpdir} from 'node:os';
 import {join, resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {parseCalendar,normalizeDays,summarize,renderPulse,renderSummary,updateReadme,START_MARKER,END_MARKER} from './activity.mjs';
+import {renderContributionArt} from './profile-art.mjs';
 const makeDays=(end='2026-10-10')=>Array.from({length:365},(_,i)=>({date:new Date(Date.parse(end+'T00:00:00Z')-(364-i)*86400000).toISOString().slice(0,10),count:0}));
 const snapshot=()=>({username:'tensorkai',days:makeDays(),fetchedAt:'2026-10-10T10:00:00Z'});
 
@@ -39,24 +40,25 @@ test('statistics count contributions, active days, and consecutive runs independ
  assert.equal(s.total,22); assert.equal(s.active,6); assert.equal(s.longest,3);
  assert.deepEqual(s.peak,days[6]); assert.equal(s.latest.count,3);
 });
-test('summary shows exact rolling totals, recent dates and UTC freshness without images',()=>{
+test('summary pairs local artwork with exact accessible totals, recent dates and UTC freshness',()=>{
  const data=snapshot();
  data.days[0].count=100;
  data.days.at(-20).count=8;
  data.days.at(-2).count=2;
  data.days.at(-1).count=3;
  const markdown=renderSummary(data);
- for(const [label,count] of [['PAST 365 DAYS',113],['DAYS ACTIVE',4],['LONGEST STREAK',2],['PAST 30 DAYS',13],['PAST 7 DAYS',5],['LATEST UTC DAY',3]]){
-  assert.ok(markdown.includes('<sub>'+label+'</sub><h2>'+count+'</h2>'));
+ for(const [label,count] of [['Past 365 days',113],['Days active',4],['Longest streak',2],['Past 30 days',13],['Past 7 days',5],['Latest day',3]]){
+  assert.ok(markdown.includes('| '+label+' | '+count+' '));
  }
  assert.ok(markdown.includes('10-10 Sat  '+'█'.repeat(18)+'    3'));
  assert.ok(markdown.includes('10-09 Fri  '+'█'.repeat(12)+'░'.repeat(6)+'    2'));
  assert.ok(markdown.includes('2026-10-10 10:00:00 UTC'));
- assert.doesNotMatch(markdown,/<img|<svg|!\[|data:image|animation/);
+ assert.match(markdown,/src="\.\/assets\/contribution-observatory\.svg"/);
+ assert.match(markdown,/113 contributions, 4 active days, 2-day longest streak/);
  assert.equal(renderSummary(JSON.parse(JSON.stringify(data))),markdown);
 });
 test('zero activity and invalid snapshots are handled explicitly',()=>{
- assert.equal((renderSummary(snapshot()).match(/<h2>0<\/h2>/g)||[]).length,6);
+ assert.equal((renderSummary(snapshot()).match(/\| (?:Past 365 days|Days active|Longest streak|Past 30 days|Past 7 days|Latest day) \| 0 /g)||[]).length,6);
  assert.throws(()=>renderSummary({...snapshot(),username:'a<&"'}),/Invalid GitHub username/);
  assert.throws(()=>renderSummary({...snapshot(),fetchedAt:'bad'}),/timestamp/);
  assert.throws(()=>renderSummary({...snapshot(),days:makeDays().slice(1)}),/Incomplete/);
@@ -96,7 +98,7 @@ test('offline updater writes Markdown and preserves files on validation failure'
  try{
   await mkdir(join(root,'scripts'));
   await mkdir(join(root,'data'));
-  for(const name of ['activity.mjs','update-activity.mjs'])await copyFile(new URL(name,import.meta.url),join(root,'scripts',name));
+  for(const name of ['activity.mjs','update-activity.mjs','profile-art.mjs'])await copyFile(new URL(name,import.meta.url),join(root,'scripts',name));
   const data={...snapshot(),source:'https://github.com/users/tensorkai/contributions',avatarDataUrl:'old-image'};
   const dataPath=join(root,'data','contributions.json');
   const readmePath=join(root,'README.md');
@@ -106,20 +108,48 @@ test('offline updater writes Markdown and preserves files on validation failure'
   const first=run();
   assert.equal(first.status,0,first.stderr);
   const output=await readFile(readmePath,'utf8');
-  assert.ok(output.includes('## 02 / The signal'));
+  assert.ok(output.includes('## 02 / Contribution observatory'));
+  const artPath=join(root,'assets','contribution-observatory.svg');
+  const artwork=await readFile(artPath,'utf8');
+  assert.match(artwork,/365 DAYS IN ORBIT/);
   assert.ok(output.endsWith('Keep footer'));
   const saved=await readFile(dataPath,'utf8');
   assert.equal(JSON.parse(saved).avatarDataUrl,undefined);
   assert.equal(run().status,0);
   assert.equal(await readFile(readmePath,'utf8'),output);
+  assert.equal(await readFile(artPath,'utf8'),artwork);
   await writeFile(readmePath,'Missing markers; do not replace');
   assert.notEqual(run().status,0);
   assert.equal(await readFile(readmePath,'utf8'),'Missing markers; do not replace');
   assert.equal(await readFile(dataPath,'utf8'),saved);
+  assert.equal(await readFile(artPath,'utf8'),artwork);
  }finally{
   // Only remove the unique fixture directory created by this test.
   assert.ok(resolve(root).startsWith(resolve(tmpdir()) + '\\') || resolve(root).startsWith(resolve(tmpdir()) + '/'));
   assert.ok(root.includes('contribution-summary-test-'));
   await rm(root,{recursive:true,force:true});
  }
+});
+
+test('observatory represents every date once and weekly volumes conserve the total',()=>{
+ const data=snapshot();
+ data.days.forEach((d,i)=>d.count=i%11);
+ const art=renderContributionArt(data);
+ const marks=[...art.matchAll(/data-date="([^"]+)" data-count="(\d+)"/g)];
+ assert.deepEqual(marks.map(m=>({date:m[1],count:Number(m[2])})),data.days);
+ const totals=[...art.matchAll(/data-week-total="(\d+)"/g)].map(m=>Number(m[1]));
+ assert.equal(totals.length,53);
+ assert.equal(totals.reduce((a,b)=>a+b,0),summarize(data.days).total);
+ assert.equal((art.match(/data-pulse-date=/g)||[]).length,7);
+ assert.doesNotMatch(art,/NaN|Infinity|<script|<foreignObject|(?:href|src)=/);
+ assert.match(art,/prefers-reduced-motion/);
+ assert.equal(renderContributionArt(data),art);
+});
+
+test('empty contribution artwork stays finite and extreme values remain valid',()=>{
+ const data=snapshot();
+ assert.doesNotMatch(renderContributionArt(data),/NaN|Infinity/);
+ data.days.at(-1).count=12345;
+ assert.match(renderContributionArt(data),/12,345/);
+ assert.throws(()=>renderContributionArt({...data,days:data.days.slice(1)}),/Incomplete/);
 });

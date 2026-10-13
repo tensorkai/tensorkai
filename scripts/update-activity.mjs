@@ -1,5 +1,6 @@
 import {readFile, writeFile, mkdir, rename} from 'node:fs/promises';
 import {parseCalendar, normalizeDays, summarize, updateReadme} from './activity.mjs';
+import {renderContributionArt} from './profile-art.mjs';
 
 const root = new URL('../', import.meta.url);
 const file = relative => new URL(relative, root);
@@ -25,9 +26,16 @@ if (offline) {
 
 // Validate data and README boundaries before replacing either file.
 const readme = updateReadme(await readFile(file('README.md'), 'utf8'), snapshot);
+const artwork = renderContributionArt(snapshot);
+const mobileArtwork = renderContributionArt(snapshot,{mobile:true});
 await mkdir(file('data/'), {recursive: true});
+await mkdir(file('assets/'), {recursive: true});
 await writeFile(file('README.md.tmp'), readme);
 await writeFile(file('data/contributions.json.tmp'), JSON.stringify(snapshot, null, 2) + '\n');
+await writeFile(file('assets/contribution-observatory.svg.tmp'), artwork);
+await writeFile(file('assets/contribution-observatory-mobile.svg.tmp'), mobileArtwork);
+await rename(file('assets/contribution-observatory-mobile.svg.tmp'), file('assets/contribution-observatory-mobile.svg'));
+await rename(file('assets/contribution-observatory.svg.tmp'), file('assets/contribution-observatory.svg'));
 await rename(file('data/contributions.json.tmp'), file('data/contributions.json'));
 await rename(file('README.md.tmp'), file('README.md'));
 console.log(JSON.stringify({username: snapshot.username, days: snapshot.days.length, ...summarize(snapshot.days)}, null, 2));

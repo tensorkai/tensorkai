@@ -11,6 +11,7 @@ on:
       - 'scripts/activity.mjs'
       - 'scripts/update-activity.mjs'
       - 'scripts/activity.test.mjs'
+      - 'scripts/profile-art.mjs'
       - '.github/workflows/contribution-observatory.yml'
 
 permissions:
@@ -47,7 +48,7 @@ jobs:
             git checkout --detach origin/main
             node --test scripts/activity.test.mjs
             node scripts/update-activity.mjs
-            git add README.md data/contributions.json
+            git add README.md data/contributions.json assets/contribution-observatory.svg assets/contribution-observatory-mobile.svg
             if git diff --cached --quiet; then
               exit 0
             fi
