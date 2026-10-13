@@ -8,10 +8,10 @@ directory includes pinned source URLs and upstream licenses from Devicon and
 Simple Icons. No image
 services, fonts, packages, or personal tokens are required. Desktop and mobile
 mastheads have separate compositions; animation respects reduced motion.
-The stack has desktop and mobile layouts. Contribution outlines ripple across
-active days without changing the base colors,
-counts, or positions. Zero days never receive animated highlights. Reduced motion
-hides the contribution highlights.
+The stack has desktop and mobile layouts. A white scanner with violet afterimages
+travels through the contribution grid in a 24-second serpentine loop. Its route
+contains only calendar cells inside the saved window. The scanner is decorative;
+it never changes activity colors, counts, or positions. Reduced motion hides it.
 
 `field-notes.mjs` defines the active artwork, exported through `profile-art.mjs`.
 The older artwork remains in the repository but is no longer referenced by the

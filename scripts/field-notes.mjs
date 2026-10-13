@@ -80,10 +80,19 @@ export function renderContributionArt(snapshot,{mobile=false}={}) {
   const step=mobile?10:20,tile=mobile?8:16,gx=mobile?42:90,gy=mobile?98:100;
   const tiles=days.map((d,i)=>{
     const x=gx+Math.floor((i+offset)/7)*step,y=gy+(i+offset)%7*step;
-    // Only decorative outlines animate. Data colors and square positions stay fixed.
-    const glint=d.count?rect(x,y,tile,tile,'none',`class="activity-glint" rx="${mobile?1.5:3}" stroke="${p.lime}" stroke-width="${mobile?.8:1.2}" style="animation-delay:${(Math.floor((i+offset)/7)*.09).toFixed(2)}s"`):'';
-    return `<g data-date="${d.date}" data-count="${d.count}"><title>${d.date}: ${d.count} contributions</title>${rect(x,y,tile,tile,colors[level(d.count)],`rx="${mobile?1.5:3}" stroke="#ffffff" stroke-opacity=".06"`)}${glint}</g>`;
+    return `<g data-date="${d.date}" data-count="${d.count}"><title>${d.date}: ${d.count} contributions</title>${rect(x,y,tile,tile,colors[level(d.count)],`rx="${mobile?1.5:3}" stroke="#ffffff" stroke-opacity=".06"`)}</g>`;
   }).join('');
+  // A white scanner and violet afterimages follow a serpentine route through
+  // actual calendar cells. They are separate from the immutable data squares.
+  const route=days.map((d,i)=>({col:Math.floor((i+offset)/7),row:(i+offset)%7}))
+    .sort((a,b)=>a.col-b.col||(a.col%2?b.row-a.row:a.row-b.row));
+  const keyframes=route.map((cell,i)=>`${(i/(route.length-1)*100).toFixed(4)}%{transform:translate(${gx+cell.col*step}px,${gy+cell.row*step}px)}`).join('');
+  const scanner='<g class="calendar-scanner" aria-hidden="true">'+Array.from({length:11},(_,i)=>{
+    const lag=10-i,alpha=lag===0?1:(.6*(1-lag/11)).toFixed(2);
+    return `<g class="scan-particle" style="animation-delay:${(-8+lag*.075).toFixed(3)}s;opacity:${alpha}">`+
+      rect(-.6,-.6,tile+1.2,tile+1.2,'none',`rx="${mobile?2:3}" stroke="${lag===0?'#ffffff':p.violet}" stroke-width="${lag===0?(mobile?1.5:2.2):(mobile?1:1.5)}"`)+
+      (lag===0?`<path d="M${tile/2} -3v-2M${tile/2} ${tile+3}v2" stroke="#ffffff" stroke-width="${mobile?1:1.5}"/>`:'')+'</g>';
+  }).join('')+'</g>';
   const months=days.flatMap((d,i)=>{
     const col=Math.floor((i+offset)/7);
     if((i!==0&&d.date.slice(-2)!=='01')||col>51)return [];
@@ -95,10 +104,10 @@ export function renderContributionArt(snapshot,{mobile=false}={}) {
     text(24,36,'The daily practice.',mobile?22:26,p.ink,'font-weight="700"')+
     (mobile?mono(24,61,`${s.total.toLocaleString('en-US')} contributions / past 365 days`,13,p.lime):
       mono(w-26,36,`${s.total.toLocaleString('en-US')} contributions / past 365 days`,16,p.lime,'text-anchor="end"'))+
-    months+weekdays+tiles+
+    months+weekdays+tiles+scanner+
     (mobile?'':mono(26,272,`${s.active} active days  /  ${s.longest}-day best streak`,13))+
     text(lx-38,ly+10,'Less',mobile?11:12,p.muted)+colors.map((color,i)=>rect(lx+i*18,ly,12,12,color,'rx="2"')).join('')+
     text(lx+95,ly+10,'More',mobile?11:12,p.muted)+
     (mobile?mono(24,228,`${s.active} active days / ${s.longest}-day best streak`,12):''),
-    '.activity-glint{opacity:0;animation:activity-wave 8s ease-in-out infinite}@keyframes activity-wave{0%,18%,100%{opacity:0}8%{opacity:.95}}');
+    `.scan-particle{animation:calendar-scan 24s linear infinite}@keyframes calendar-scan{${keyframes}}@media(prefers-reduced-motion:reduce){.calendar-scanner{display:none}}`);
 }

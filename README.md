@@ -43,7 +43,7 @@
 | Peak day | 38 contributions · 2026-07-28 |
 | Latest day | 21 contributions · 2026-10-13 (still in progress) |
 
-One square per UTC day; weeks in columns, Sunday–Saturday in rows. Green intensity: 0, 1–3, 4–9, 10–19, 20+ contributions. Blank cells fall outside the window. Counts include GitHub contributions, not just commits.
+One square per UTC day; weeks in columns, Sunday–Saturday in rows. Green intensity: 0, 1–3, 4–9, 10–19, 20+ contributions. Blank cells fall outside the window. The white scanner and violet trail are decorative. Counts include GitHub contributions, not just commits.
 
 <sub>Last refreshed: <b>2026-10-13 12:16:12 UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>
 
