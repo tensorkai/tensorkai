@@ -74,20 +74,20 @@ Four ways of asking the same question: *what can this become?*
 Work leaves a trace. Here is mine, refreshed from GitHub every hour.
 
 <table width="100%">
-<tr><td width="33%" align="center"><sub>PAST 365 DAYS</sub><h2>957</h2><sub>contributions</sub></td><td width="33%" align="center"><sub>DAYS ACTIVE</sub><h2>94</h2><sub>in the past 365 days</sub></td><td width="33%" align="center"><sub>LONGEST STREAK</sub><h2>10</h2><sub>consecutive days in this window</sub></td></tr>
-<tr><td width="33%" align="center"><sub>PAST 30 DAYS</sub><h2>255</h2><sub>contributions</sub></td><td width="33%" align="center"><sub>PAST 7 DAYS</sub><h2>119</h2><sub>contributions</sub></td><td width="33%" align="center"><sub>LATEST UTC DAY</sub><h2>21</h2><sub>2026-10-12 · in progress</sub></td></tr>
+<tr><td width="33%" align="center"><sub>PAST 365 DAYS</sub><h2>975</h2><sub>contributions</sub></td><td width="33%" align="center"><sub>DAYS ACTIVE</sub><h2>95</h2><sub>in the past 365 days</sub></td><td width="33%" align="center"><sub>LONGEST STREAK</sub><h2>10</h2><sub>consecutive days in this window</sub></td></tr>
+<tr><td width="33%" align="center"><sub>PAST 30 DAYS</sub><h2>273</h2><sub>contributions</sub></td><td width="33%" align="center"><sub>PAST 7 DAYS</sub><h2>136</h2><sub>contributions</sub></td><td width="33%" align="center"><sub>LATEST UTC DAY</sub><h2>18</h2><sub>2026-10-13 · in progress</sub></td></tr>
 </table>
 
 **A week, in signals.** <sub>Daily contributions · UTC · bars relative to this week’s busiest day</sub>
 
 ```text
-10-06 Tue  █░░░░░░░░░░░░░░░░░    1
 10-07 Wed  ███████████████░░░   24
 10-08 Thu  ███████████████░░░   23
 10-09 Fri  █░░░░░░░░░░░░░░░░░    1
 10-10 Sat  ██████████████████   28
 10-11 Sun  ██████████████░░░░   21
 10-12 Mon  ██████████████░░░░   21
+10-13 Tue  ████████████░░░░░░   18
 ```
 
 <details>
@@ -95,15 +95,15 @@ Work leaves a trace. Here is mine, refreshed from GitHub every hour.
 
 | Measurement | Reading |
 | :--- | :--- |
-| Window | 2025-10-13 → 2026-10-12 |
+| Window | 2025-10-14 → 2026-10-13 |
 | Peak day | 38 contributions · 2026-07-28 |
-| Latest day | 21 contributions · 2026-10-12 (still in progress) |
+| Latest day | 18 contributions · 2026-10-13 (still in progress) |
 
 Counts are GitHub contributions, not just commits. The graphic above is text rebuilt by the hourly workflow.
 
 </details>
 
-<sub>Last refreshed: <b>2026-10-12 23:13:00 UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>
+<sub>Last refreshed: <b>2026-10-13 03:34:59 UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>
 
 [View GitHub contribution calendar](https://github.com/tensorkai#year-list-container) · [Update history](https://github.com/tensorkai/tensorkai/actions/workflows/contribution-observatory.yml)
 
