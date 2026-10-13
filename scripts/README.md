@@ -1,15 +1,17 @@
 # Code / Circuits / Canvas
 
 A compact profile with an original microchip-and-brushstroke masthead and a
-GitHub-style contribution grid. A connected three-module idea engine displays
-the technology stack using illustrated circuits and individual tool tiles.
-All artwork is local SVG geometry. No image
+GitHub-style contribution grid. The stack has three labeled rows: Frontend,
+Backend, and AI and Machine Learning. Each technology uses a recognizable logo
+and a name. Logos are embedded from local SVG files in `assets/logos`; that
+directory includes pinned source URLs and upstream licenses from Devicon and
+Simple Icons. No image
 services, fonts, packages, or personal tokens are required. Desktop and mobile
 mastheads have separate compositions; animation respects reduced motion.
-The stack also has desktop and mobile layouts. Its circuit traces animate;
-contribution outlines ripple across active days without changing the base colors,
+The stack has desktop and mobile layouts. Contribution outlines ripple across
+active days without changing the base colors,
 counts, or positions. Zero days never receive animated highlights. Reduced motion
-disables the traces' motion and hides the contribution highlights.
+hides the contribution highlights.
 
 `field-notes.mjs` defines the active artwork, exported through `profile-art.mjs`.
 The older artwork remains in the repository but is no longer referenced by the

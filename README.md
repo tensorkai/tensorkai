@@ -11,11 +11,11 @@
 - **Code with a pulse.** SecuWear, NodeMCU robotics, and IoT experiments that reach beyond the screen.
 - **A different kind of resolution.** MATLAB virtual labs, painted portraits, and landscapes. Learning by making things visible.
 
-### The working palette
+### Tech stack
 
 <picture>
-  <source media="(max-width: 640px)" srcset="./assets/idea-engine-mobile.svg" />
-  <img src="./assets/idea-engine.svg" width="100%" alt="The idea engine. Models: Python, PyTorch, TensorFlow, Hugging Face, Ollama. Interfaces: TypeScript, React, Next.js, Flutter, Dart. Systems: FastAPI, Node.js, PostgreSQL, C++, NodeMCU, MATLAB." />
+  <source media="(max-width: 640px)" srcset="./assets/stack-mobile.svg" />
+  <img src="./assets/stack.svg" width="100%" alt="Frontend: JavaScript, TypeScript, React, Next.js, Vue, Tailwind CSS, Flutter, Dart. Backend: Node.js, FastAPI, NestJS, Spring, PostgreSQL, MongoDB, MySQL. AI and Machine Learning: Python, PyTorch, TensorFlow, Hugging Face, LangChain, Ollama." />
 </picture>
 
 <!-- CONTRIBUTIONS:START -->

@@ -35,41 +35,38 @@ export function renderMasthead({mobile=false}={}) {
     mono(32,h-30,mobile?'CODE / CIRCUITS / CANVAS':'01 / THINK IT.     02 / BUILD IT.     03 / MAKE IT MATTER.',mobile?13:14));
 }
 
-export function renderStackArt({mobile=false}={}) {
-  const w=mobile?600:1200,h=mobile?674:362;
-  const modules=[
-    {name:'MODELS',title:'Teach it.',color:p.violet,tools:[['Py','Python'],['PT','PyTorch'],['TF','TensorFlow'],['HF','Hugging Face'],['Ol','Ollama']],icon:'model'},
-    {name:'INTERFACES',title:'Give it shape.',color:'#79d8ef',tools:[['TS','TypeScript'],['Re','React'],['Nx','Next.js'],['Fl','Flutter'],['Da','Dart']],icon:'screen'},
-    {name:'SYSTEMS',title:'Make it run.',color:p.lime,tools:[['FA','FastAPI'],['Js','Node.js'],['Pg','PostgreSQL'],['C+','C++'],['MC','NodeMCU'],['ML','MATLAB']],icon:'chip'},
+export function renderStackArt({mobile=false,logos={}}={}) {
+  const groups=[
+    {name:'Frontend',tools:[['javascript','JavaScript'],['typescript','TypeScript'],['react','React'],['nextjs','Next.js'],['vuejs','Vue'],['tailwindcss','Tailwind CSS'],['flutter','Flutter'],['dart','Dart']]},
+    {name:'Backend',tools:[['nodejs','Node.js'],['fastapi','FastAPI'],['nestjs','NestJS'],['spring','Spring'],['postgresql','PostgreSQL'],['mongodb','MongoDB'],['mysql','MySQL']]},
+    {name:'AI and Machine Learning',tools:[['python','Python'],['pytorch','PyTorch'],['tensorflow','TensorFlow'],['huggingface','Hugging Face'],['langchain','LangChain'],['ollama','Ollama']]},
   ];
-  const icon=(type,x,y,color)=>{
-    const drawing=type==='model'?
-      '<path d="M4 8 22 2 42 12 36 36 12 42 4 8 36 36 22 2 12 42 42 12Z"/>'+[[4,8],[22,2],[42,12],[36,36],[12,42]].map(([cx,cy])=>`<circle cx="${cx}" cy="${cy}" r="4" fill="${p.panel}"/>`).join(''):
-      type==='screen'?'<rect x="2" y="2" width="32" height="25" rx="4"/><rect x="12" y="16" width="32" height="25" rx="4" fill="'+p.panel+'"/><path d="m24 25-4 4 4 4m8-8 4 4-4 4"/>':
-      '<rect x="8" y="8" width="28" height="28" rx="5"/><path d="M16 0v8M28 0v8M16 36v8M28 36v8M0 16h8M0 28h8M36 16h8M36 28h8M16 16h12v12H16Z"/>';
-    return `<g transform="translate(${x} ${y})" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round">${drawing}</g>`;
+  const w=mobile?600:1200,h=mobile?750:390;
+  const logo=(key,x,y)=>{
+    if(!logos[key])throw new Error('Missing local technology logo: '+key);
+    // Keep upstream geometry; namespace gradient IDs when combining SVG files.
+    const source=logos[key].replace(/id="([^"]+)"/g,(_,id)=>`id="logo-${key}-${id}"`)
+      .replace(/url\(#([^)]+)\)/g,(_,id)=>`url(#logo-${key}-${id})`)
+      .replace(/(href=")#([^"]+)/g,(_,prefix,id)=>`${prefix}#logo-${key}-${id}`);
+    const fill=key==='huggingface'?'#ffcf4a':['langchain','ollama'].includes(key)?p.ink:'#000';
+    const light=key==='nextjs'?rect(x-4,y-4,52,52,'#f0f6fc','rx="26"'):'';
+    return light+source.replace(/<svg\b([^>]*)>/,(_,attrs)=>`<svg ${attrs.replace(/\s(?:width|height)="[^"]*"/g,'')} x="${x}" y="${y}" width="44" height="44" fill="${fill}">`);
   };
-  const cards=modules.map((m,i)=>{
-    const x=mobile?36:24+i*388,y=mobile?96+i*186:106,cw=mobile?540:376,ch=mobile?168:218;
-    const cols=mobile?3:2,tw=mobile?163:166,th=mobile?30:29,spacing=mobile?32:33;
-    const badges=m.tools.map(([mark,name],j)=>{
-      const bx=x+16+j%cols*(tw+9),by=y+(mobile?82:106)+Math.floor(j/cols)*spacing;
-      return `<g>${rect(bx,by,tw,th,p.bg,'rx="6"')}${rect(bx+5,by+5,22,th-10,m.color,'rx="3" fill-opacity=".14"')}`+
-        mono(bx+16,by+th/2+4,mark,10,m.color,'text-anchor="middle" font-weight="700"')+
-        text(bx+34,by+th/2+5,name,mobile?14:14,p.ink)+'</g>';
+  const rows=groups.map((group,i)=>{
+    const y=mobile?24+i*244:22+i*126;
+    const heading=mobile?text(28,y+24,group.name,25,p.ink,'font-weight="600"'):
+      group.name==='AI and Machine Learning'?
+        text(28,y+43,'AI and',24,p.ink,'font-weight="600"')+text(28,y+73,'Machine Learning',24,p.ink,'font-weight="600"'):
+        text(28,y+58,group.name,24,p.ink,'font-weight="600"');
+    const items=group.tools.map(([key,name],j)=>{
+      const cx=mobile?92+(j%4)*138:328+j*116;
+      const top=mobile?y+50+Math.floor(j/4)*89:y+13;
+      return `<g data-tech="${key}">${logo(key,cx-22,top)}`+
+        text(cx,top+67,name,mobile?16:14,p.muted,'text-anchor="middle"')+'</g>';
     }).join('');
-    return rect(x,y,cw,ch,p.panel,`rx="12" stroke="${p.line}"`)+
-      rect(x+16,y+17,4,12,m.color,'rx="2"')+mono(x+28,y+28,`0${i+1} / ${m.name}`,12,m.color)+
-      text(x+16,y+65,m.title,mobile?26:28,p.ink,'font-weight="700" letter-spacing="-.5"')+
-      icon(m.icon,x+cw-68,y+20,m.color)+badges;
+    return heading+items+(i<2?rect(28,y+(mobile?222:109),w-56,1,p.line):'');
   }).join('');
-  const wire=mobile?'M18 123V609m0-486h18m-18 186h18m-18 186h18':'M212 106V86H988V106M600 86V106';
-  return svg(w,h,'The idea engine / Technology stack','Models: Python, PyTorch, TensorFlow, Hugging Face, Ollama. Interfaces: TypeScript, React, Next.js, Flutter, Dart. Systems: FastAPI, Node.js, PostgreSQL, C++, NodeMCU, MATLAB.',
-    mono(24,29,'THE IDEA ENGINE',13,p.violet)+text(24,62,'Different tools. One curious mind.',mobile?26:29,p.ink,'font-weight="700"')+
-    (mobile?'':mono(w-24,48,'LEARN → MAKE → CONNECT',13,p.muted,'text-anchor="end"'))+
-    `<path d="${wire}" fill="none" stroke="${p.line}" stroke-width="2"/>`+
-    `<path class="stack-current" d="${wire}" fill="none" stroke="${p.violet}" stroke-width="2" stroke-dasharray="18 90"/>`+cards,
-    '.stack-current{animation:current 6s linear infinite}@keyframes current{to{stroke-dashoffset:-216}}');
+  return svg(w,h,'Tech stack',groups.map(g=>g.name+': '+g.tools.map(t=>t[1]).join(', ')+'.').join(' '),rows);
 }
 
 export function renderContributionArt(snapshot,{mobile=false}={}) {
