@@ -50,8 +50,6 @@ test('summary pairs local artwork with exact accessible totals, recent dates and
  for(const [label,count] of [['Past 365 days',113],['Days active',4],['Longest streak',2],['Past 30 days',13],['Past 7 days',5],['Latest day',3]]){
   assert.ok(markdown.includes('| '+label+' | '+count+' '));
  }
- assert.ok(markdown.includes('10-10 Sat  '+'█'.repeat(18)+'    3'));
- assert.ok(markdown.includes('10-09 Fri  '+'█'.repeat(12)+'░'.repeat(6)+'    2'));
  assert.ok(markdown.includes('2026-10-10 10:00:00 UTC'));
  assert.match(markdown,/src="\.\/assets\/contribution-observatory\.svg"/);
  assert.match(markdown,/113 contributions, 4 active days, 2-day longest streak/);
@@ -98,7 +96,7 @@ test('offline updater writes Markdown and preserves files on validation failure'
  try{
   await mkdir(join(root,'scripts'));
   await mkdir(join(root,'data'));
-  for(const name of ['activity.mjs','update-activity.mjs','profile-art.mjs'])await copyFile(new URL(name,import.meta.url),join(root,'scripts',name));
+  for(const name of ['activity.mjs','update-activity.mjs','profile-art.mjs','field-notes.mjs'])await copyFile(new URL(name,import.meta.url),join(root,'scripts',name));
   const data={...snapshot(),source:'https://github.com/users/tensorkai/contributions',avatarDataUrl:'old-image'};
   const dataPath=join(root,'data','contributions.json');
   const readmePath=join(root,'README.md');
@@ -108,10 +106,10 @@ test('offline updater writes Markdown and preserves files on validation failure'
   const first=run();
   assert.equal(first.status,0,first.stderr);
   const output=await readFile(readmePath,'utf8');
-  assert.ok(output.includes('## 02 / Contribution observatory'));
+  assert.ok(output.includes('### A little, often. A lot, eventually.'));
   const artPath=join(root,'assets','contribution-observatory.svg');
   const artwork=await readFile(artPath,'utf8');
-  assert.match(artwork,/365 DAYS IN ORBIT/);
+  assert.match(artwork,/The daily practice/);
   assert.ok(output.endsWith('Keep footer'));
   const saved=await readFile(dataPath,'utf8');
   assert.equal(JSON.parse(saved).avatarDataUrl,undefined);
@@ -131,19 +129,26 @@ test('offline updater writes Markdown and preserves files on validation failure'
  }
 });
 
-test('observatory represents every date once and weekly volumes conserve the total',()=>{
+test('square calendar represents every date and count once in both layouts',()=>{
  const data=snapshot();
  data.days.forEach((d,i)=>d.count=i%11);
- const art=renderContributionArt(data);
+ for(const mobile of [false,true]){
+ const art=renderContributionArt(data,{mobile});
  const marks=[...art.matchAll(/data-date="([^"]+)" data-count="(\d+)"/g)];
  assert.deepEqual(marks.map(m=>({date:m[1],count:Number(m[2])})),data.days);
- const totals=[...art.matchAll(/data-week-total="(\d+)"/g)].map(m=>Number(m[1]));
- assert.equal(totals.length,53);
- assert.equal(totals.reduce((a,b)=>a+b,0),summarize(data.days).total);
- assert.equal((art.match(/data-pulse-date=/g)||[]).length,7);
+ assert.equal(marks.reduce((a,m)=>a+Number(m[2]),0),summarize(data.days).total);
+ const squares=[...art.matchAll(/data-date="[^"]+" data-count="\d+"><title>[^<]+<\/title><rect x="([\d.]+)" y="([\d.]+)" width="(\d+)" height="(\d+)"/g)];
+ assert.equal(squares.length,365);
+ const step=mobile?10:20, offset=new Date(data.days[0].date+'T00:00:00Z').getUTCDay();
+ squares.forEach((square,i)=>{
+  assert.equal(square[3],square[4],'each day must be a square');
+  assert.equal(Number(square[1]),(mobile?42:90)+Math.floor((i+offset)/7)*step);
+  assert.equal(Number(square[2]),(mobile?98:100)+(i+offset)%7*step);
+ });
  assert.doesNotMatch(art,/NaN|Infinity|<script|<foreignObject|(?:href|src)=/);
  assert.match(art,/prefers-reduced-motion/);
- assert.equal(renderContributionArt(data),art);
+ assert.equal(renderContributionArt(data,{mobile}),art);
+ }
 });
 
 test('empty contribution artwork stays finite and extreme values remain valid',()=>{

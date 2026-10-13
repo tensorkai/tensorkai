@@ -12,6 +12,7 @@ on:
       - 'scripts/update-activity.mjs'
       - 'scripts/activity.test.mjs'
       - 'scripts/profile-art.mjs'
+      - 'scripts/field-notes.mjs'
       - '.github/workflows/contribution-observatory.yml'
 
 permissions:

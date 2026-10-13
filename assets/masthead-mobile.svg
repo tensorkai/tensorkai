@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="390" viewBox="0 0 600 390" role="img" aria-labelledby="title desc">
+<title id="title">TENSORKAI — Code / Circuits / Canvas</title><desc id="desc">Benedict Fusin. Turning what if into it works. AI, embedded systems, and art.</desc>
+<style>svg{font-family:Arial,Helvetica,sans-serif}.signal{animation:signal 5s ease-in-out infinite}@keyframes signal{0%,100%{opacity:.4}50%{opacity:1}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<rect x="0" y="0" width="600" height="390" fill="#0d1117" rx="16"/><text x="32" y="36" font-size="14" fill="#bca7ff" font-family="monospace" >BENEDICT FUSIN  /  @TENSORKAI</text><text x="27" y="118" font-size="73" fill="#f0f6fc" font-weight="900" letter-spacing="-5">TENSORKAI</text><text x="32" y="165" font-size="29" fill="#f0f6fc" >Turning “what if”</text><text x="32" y="203" font-size="29" fill="#b9f27c" >into “it works.”</text><g transform="translate(428 289) scale(0.61)">
+    <circle r="109" fill="none" stroke="#30363d" stroke-dasharray="2 7"/>
+    <path d="M-140 0H-63M63 0H142M0-112V-63M0 63V112" fill="none" stroke="#30363d"/>
+    <g transform="rotate(-12)">
+      <path d="M-42-78v18M-42 60v18M-78 -42h18M60 -42h18" stroke="#bca7ff" stroke-width="5"/><path d="M-14-78v18M-14 60v18M-78 -14h18M60 -14h18" stroke="#bca7ff" stroke-width="5"/><path d="M14-78v18M14 60v18M-78 14h18M60 14h18" stroke="#bca7ff" stroke-width="5"/><path d="M42-78v18M42 60v18M-78 42h18M60 42h18" stroke="#bca7ff" stroke-width="5"/>
+      <rect x="-60" y="-60" width="120" height="120" fill="#161b22" rx="12" stroke="#bca7ff" stroke-width="2"/>
+      <text x="0" y="14" font-size="43" fill="#f0f6fc" text-anchor="middle" font-family="monospace">&lt;/&gt;</text>
+    </g>
+    <path d="M-100 69Q-45 27 25 64T122 26" stroke="#b9f27c" stroke-width="21" fill="none" stroke-linecap="square"/>
+    <path d="M-94 77Q-41 42 27 74T127 36" stroke="#0d1117" stroke-width="3" fill="none"/>
+    <g class="signal"><rect x="-122" y="-65" width="10" height="10" fill="#b9f27c" /><rect x="119" y="-57" width="7" height="7" fill="#bca7ff" /><rect x="82" y="107" width="7" height="7" fill="#b9f27c" /></g>
+  </g><text x="32" y="360" font-size="13" fill="#919ba8" font-family="monospace" >CODE / CIRCUITS / CANVAS</text></svg>

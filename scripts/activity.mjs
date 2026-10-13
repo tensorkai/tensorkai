@@ -75,19 +75,17 @@ export function renderSummary({username, days, fetchedAt}) {
   const recent = count => validated.slice(-count).reduce((total, day) => total + day.count, 0);
   const profile = 'https://github.com/' + username;
   return [
-    '## 02 / Contribution observatory',
-    '',
-    '**A year of making, drawn from the source.** Every mark is a day. Every bar is real activity.',
+    '### A little, often. A lot, eventually.',
     '',
     '<a href="' + profile + '#year-list-container">',
     '<picture>',
     '  <source media="(max-width: 640px)" srcset="./assets/contribution-observatory-mobile.svg" />',
-    '  <img src="./assets/contribution-observatory.svg" width="100%" alt="Contribution observatory: ' + s.total + ' contributions, ' + s.active + ' active days, ' + s.longest + '-day longest streak. Past 30 days: ' + recent(30) + '; past 7 days: ' + recent(7) + '. Full text readout below." />',
+    '  <img src="./assets/contribution-observatory.svg" width="100%" alt="GitHub contribution grid: ' + s.total + ' contributions, ' + s.active + ' active days, ' + s.longest + '-day longest streak. Past 30 days: ' + recent(30) + '; past 7 days: ' + recent(7) + '. Full text readout below." />',
     '</picture>',
     '</a>',
     '',
     '<details>',
-    '<summary>Read the numbers / accessible text version ↗</summary>',
+    '<summary>Behind the squares — activity &amp; freshness</summary>',
     '',
     '| Measurement | Reading |',
     '| :--- | :--- |',
@@ -100,20 +98,14 @@ export function renderSummary({username, days, fetchedAt}) {
     '| Peak day | ' + s.peak.count + ' contributions · ' + s.peak.date + ' |',
     '| Latest day | ' + s.latest.count + ' contributions · ' + s.latest.date + ' (still in progress) |',
     '',
-    '**The past seven UTC days**',
-    '',
-    '```text',
-    renderPulse(validated),
-    '```',
-    '',
-    'Counts are GitHub contributions, not just commits. The circular calendar runs clockwise, oldest day at the top. Mark length uses a square-root scale; orange marks exceed 60% of the peak daily count. The weekly skyline groups consecutive seven-day blocks from the window start; the final block is partial. Daily and weekly bars use linear scales. Zero days have no activity bar.',
-    '',
-    '</details>',
+    'One square per UTC day; weeks in columns, Sunday–Saturday in rows. Green intensity: 0, 1–3, 4–9, 10–19, 20+ contributions. Blank cells fall outside the window. Counts include GitHub contributions, not just commits.',
     '',
     '<sub>Last refreshed: <b>' + fetched.toISOString().replace('T', ' ').slice(0, 19) + ' UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>',
     '',
     '[View GitHub contribution calendar](' + profile + '#year-list-container) · ' +
       '[Update history](' + profile + '/' + username + '/actions/workflows/contribution-observatory.yml)',
+    '',
+    '</details>',
   ].join('\n');
 }
 
