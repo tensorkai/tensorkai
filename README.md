@@ -13,9 +13,10 @@
 
 ### The working palette
 
-**Models** → Python · PyTorch · TensorFlow · Hugging Face · Ollama<br>
-**Interfaces** → TypeScript · React / Next.js · Flutter / Dart<br>
-**Under the hood** → FastAPI · Node.js · PostgreSQL · C++ · NodeMCU · MATLAB
+<picture>
+  <source media="(max-width: 640px)" srcset="./assets/idea-engine-mobile.svg" />
+  <img src="./assets/idea-engine.svg" width="100%" alt="The idea engine. Models: Python, PyTorch, TensorFlow, Hugging Face, Ollama. Interfaces: TypeScript, React, Next.js, Flutter, Dart. Systems: FastAPI, Node.js, PostgreSQL, C++, NodeMCU, MATLAB." />
+</picture>
 
 <!-- CONTRIBUTIONS:START -->
 
