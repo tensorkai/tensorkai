@@ -129,22 +129,31 @@ test('offline updater writes Markdown and preserves files on validation failure'
  }
 });
 
-test('square calendar represents every date and count once in both layouts',()=>{
+test('3D calendar preserves dates, projected positions, heights and scanner route in both layouts',()=>{
  const data=snapshot();
- data.days.forEach((d,i)=>d.count=i%11);
+ data.days.forEach((d,i)=>d.count=i%40);
  for(const mobile of [false,true]){
  const art=renderContributionArt(data,{mobile});
  const marks=[...art.matchAll(/data-date="([^"]+)" data-count="(\d+)"/g)];
  assert.deepEqual(marks.map(m=>({date:m[1],count:Number(m[2])})),data.days);
  assert.equal(marks.reduce((a,m)=>a+Number(m[2]),0),summarize(data.days).total);
- const squares=[...art.matchAll(/data-date="[^"]+" data-count="\d+"><title>[^<]+<\/title><rect x="([\d.]+)" y="([\d.]+)" width="(\d+)" height="(\d+)"/g)];
+ const squares=[...art.matchAll(/class="tile-top l(\d)" data-height="([\d.]+)" d="M([\d.]+) ([\d.]+)/g)];
  assert.equal(squares.length,365);
- const step=mobile?10:20, offset=new Date(data.days[0].date+'T00:00:00Z').getUTCDay();
+ const step=mobile?9.5:19, offset=new Date(data.days[0].date+'T00:00:00Z').getUTCDay();
  squares.forEach((square,i)=>{
-  assert.equal(square[3],square[4],'each day must be a square');
-  assert.equal(Number(square[1]),(mobile?42:90)+Math.floor((i+offset)/7)*step);
-  assert.equal(Number(square[2]),(mobile?98:100)+(i+offset)%7*step);
+  const count=data.days[i].count,level=count===0?0:count<=3?1:count<=9?2:count<=19?3:4;
+  const height=(mobile?1.2:2.4)+level*(mobile?1.6:3.2);
+  const x=(mobile?30:64)+Math.floor((i+offset)/7)*step+(i+offset)%7*step*.45;
+  const y=(mobile?114:120)+(i+offset)%7*step*.72-height;
+  assert.equal(Number(square[1]),level);
+  assert.equal(Number(square[2]),height);
+  assert.equal(Number(square[3]),x);
+  assert.equal(Number(square[4]),y);
+  assert.ok(art.includes(`transform:translate(${x}px,${y}px)`),'scanner visits each raised tile');
  });
+ assert.equal((art.match(/class="scan-particle"/g)||[]).length,11);
+ assert.match(art,/calendar-scan 24s linear infinite/);
+ assert.match(art,/\.calendar-scanner\{display:none\}/);
  assert.doesNotMatch(art,/NaN|Infinity|<script|<foreignObject|(?:href|src)=/);
  assert.match(art,/prefers-reduced-motion/);
  assert.equal(renderContributionArt(data,{mobile}),art);

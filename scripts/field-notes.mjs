@@ -156,22 +156,30 @@ export function renderContributionArt(snapshot,{mobile=false}={}) {
   const s=summarize(days),w=mobile?600:1200,h=mobile?248:300;
   const level=n=>n===0?0:n<=3?1:n<=9?2:n<=19?3:4;
   const offset=new Date(days[0].date+'T00:00:00Z').getUTCDay();
-  const step=mobile?10:20,tile=mobile?8:16,gx=mobile?42:90,gy=mobile?98:100;
+  const step=mobile?9.5:19,tile=mobile?7.5:15,gx=mobile?30:64,gy=mobile?114:120;
+  // Oblique projection keeps weeks readable while giving each day real depth.
+  const project=(col,row)=>({x:gx+col*step+row*step*.45,y:gy+row*step*.72});
+  const elevation=count=>(mobile?1.2:2.4)+level(count)*(mobile?1.6:3.2);
+  const face=(x,y)=>`M${x} ${y}h${tile}l${tile*.45} ${tile*.72}h${-tile}Z`;
   const tiles=days.map((d,i)=>{
-    const x=gx+Math.floor((i+offset)/7)*step,y=gy+(i+offset)%7*step;
-    return `<g data-date="${d.date}" data-count="${d.count}"><title>${d.date}: ${d.count} contributions</title>${rect(x,y,tile,tile,'l'+level(d.count),`rx="${mobile?2:4}"`)}</g>`;
+    const {x,y}=project(Math.floor((i+offset)/7),(i+offset)%7),z=elevation(d.count);
+    const sides=`M${x} ${y-z}v${z}l${tile*.45} ${tile*.72}h${tile}v${-z}h${-tile}Z`;
+    return `<g data-date="${d.date}" data-count="${d.count}"><title>${d.date}: ${d.count} contributions</title>`+
+      `<path d="${sides}" ${paint('l'+level(d.count))}/><path d="${sides}" fill="#000000" opacity=".22"/>`+
+      `<path class="tile-top l${level(d.count)}" data-height="${z}" d="${face(x,y-z)}" fill="${T['l'+level(d.count)][0]}"/>`+
+      `<path d="M${x} ${y-z}h${tile}l${tile*.45} ${tile*.72}" fill="none" stroke="#ffffff" stroke-opacity=".3" stroke-width=".6"/></g>`;
   }).join('');
   // A blue scanner with a four-color trail follows a serpentine route through
-  // actual calendar cells. It is separate from the immutable data squares.
-  const route=days.map((d,i)=>({col:Math.floor((i+offset)/7),row:(i+offset)%7}))
+  // actual calendar cells. It is separate from the immutable data tiles.
+  const route=days.map((d,i)=>({col:Math.floor((i+offset)/7),row:(i+offset)%7,count:d.count}))
     .sort((a,b)=>a.col-b.col||(a.col%2?b.row-a.row:a.row-b.row));
-  const keyframes=route.map((cell,i)=>`${(i/(route.length-1)*100).toFixed(4)}%{transform:translate(${gx+cell.col*step}px,${gy+cell.row*step}px)}`).join('');
+  const keyframes=route.map((cell,i)=>{const {x,y}=project(cell.col,cell.row);return `${(i/(route.length-1)*100).toFixed(4)}%{transform:translate(${x}px,${y-elevation(cell.count)}px)}`;}).join('');
   const trail=[G.red,G.yellow,G.green,G.blue];
   const scanner='<g class="calendar-scanner" aria-hidden="true">'+Array.from({length:11},(_,i)=>{
     const lag=10-i,alpha=lag===0?1:(.7*(1-lag/11)).toFixed(2);
     const color=lag===0?G.blue:trail[(lag-1)%4];
     return `<g class="scan-particle" style="animation-delay:${(-8+lag*.075).toFixed(3)}s;opacity:${alpha}">`+
-      rect(-.6,-.6,tile+1.2,tile+1.2,'none',`rx="${mobile?2.5:4.5}" stroke="${color}" stroke-width="${lag===0?(mobile?1.6:2.4):(mobile?1:1.5)}"`)+
+      `<path d="${face(0,0)}" fill="none" stroke="${color}" stroke-linejoin="round" stroke-width="${lag===0?(mobile?1.6:2.4):(mobile?1:1.5)}"/>`+
       (lag===0?`<path d="M${tile/2} -3v-2M${tile/2} ${tile+3}v2" stroke="${G.blue}" stroke-width="${mobile?1:1.5}" stroke-linecap="round"/>`:'')+'</g>';
   }).join('')+'</g>';
   const firstMonthCol=days.findIndex((d,i)=>i>0&&d.date.endsWith('-01'));
@@ -179,9 +187,9 @@ export function renderContributionArt(snapshot,{mobile=false}={}) {
     const col=Math.floor((i+offset)/7);
     if((i!==0&&d.date.slice(-2)!=='01')||col>51)return [];
     if(i===0&&firstMonthCol>0&&Math.floor((firstMonthCol+offset)/7)<3)return [];
-    return text(gx+col*step,gy-12,new Date(d.date+'T00:00:00Z').toLocaleDateString('en-US',{month:'short',timeZone:'UTC'}),mobile?10:13,'mu');
+    return text(gx+col*step,gy-(mobile?20:28),new Date(d.date+'T00:00:00Z').toLocaleDateString('en-US',{month:'short',timeZone:'UTC'}),mobile?10:13,'mu');
   }).join('');
-  const weekdays=[1,3,5].map(row=>text(mobile?12:34,gy+row*step+tile-2,['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][row],mobile?9:12,'mu')).join('');
+  const weekdays=[1,3,5].map(row=>{const {x,y}=project(0,row);return text(x-8,y+tile*.5,['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][row],mobile?8:11,'mu','text-anchor="end"');}).join('');
   const stats=[
     {label:`${s.total.toLocaleString('en-US')} contributions`,fill:'acc',stroke:'acc',color:'onacc'},
     {label:`${s.active} active days`,dot:G.green},
@@ -191,12 +199,12 @@ export function renderContributionArt(snapshot,{mobile=false}={}) {
   const legend=text(lx-38,ly+10,'Less',mobile?11:12,'mu')+
     [0,1,2,3,4].map(i=>rect(lx+i*18,ly,12,12,'l'+i,'rx="3"')).join('')+
     text(lx+95,ly+10,'More',mobile?11:12,'mu');
-  return svg(w,h,'The daily practice / GitHub contributions',`${s.total} contributions, ${s.active} active days, ${s.longest}-day longest streak. One square per UTC day; weeks in columns, Sunday through Saturday in rows.`,
+  return svg(w,h,'The daily practice / GitHub contributions',`${s.total} contributions, ${s.active} active days, ${s.longest}-day longest streak. One 3D tile per UTC day; height and green intensity show contribution levels. Weeks in columns, Sunday through Saturday in rows.`,
     (mobile?
       text(24,36,'The daily practice.',20,'ink','font-weight="500"')+chipRow(24,46,stats,{size:12,h:24}):
       dots(36,42,4.5,12)+text(90,49,'The daily practice.',24,'ink','font-weight="500"')+chipRow(1168,26,stats,{align:'end',size:14,h:34}))+
     months+weekdays+tiles+scanner+legend+
-    (mobile?text(24,228,'One square per UTC day · past 365 days',12,'mu'):
-      text(34,273,'One square per UTC day · past 365 days',13,'mu')),
+    (mobile?text(24,228,'One 3D tile per UTC day · past 365 days',12,'mu'):
+      text(34,273,'One 3D tile per UTC day · past 365 days',13,'mu')),
     `.scan-particle{animation:calendar-scan 24s linear infinite}@keyframes calendar-scan{${keyframes}}@media(prefers-reduced-motion:reduce){.calendar-scanner{display:none}}`);
 }

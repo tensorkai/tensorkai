@@ -12,7 +12,7 @@ services, fonts, packages, or personal tokens are required; Google Sans and
 Roboto are used when installed, with system fallbacks. Desktop and mobile
 mastheads have separate compositions; animation respects reduced motion.
 The stack has desktop and mobile layouts. A blue scanner with a four-color trail
-travels through the contribution grid in a 24-second serpentine loop. Its route
+travels over the raised contribution tiles in a 24-second serpentine loop. Its route
 contains only calendar cells inside the saved window. The scanner is decorative;
 it never changes activity colors, counts, or positions. Reduced motion hides it.
 
@@ -36,8 +36,8 @@ The offline updater uses the saved snapshot and preserves its timestamp. Omit
 
 ## Contribution data
 
-Each rounded square represents one of 365 consecutive UTC days. Calendar weeks
-run left to right; weekdays run Sunday to Saturday. Green levels represent 0,
+Each raised 3D tile represents one of 365 consecutive UTC days. Calendar weeks
+run left to right; weekdays run Sunday to Saturday. Tile height and green levels represent 0,
 1–3, 4–9, 10–19, and 20+ contributions. Blank cells are outside the window.
 Counts are GitHub contributions, not just commits; the latest day is incomplete.
 Totals, date range, freshness, and thresholds are also in the README's disclosure.
@@ -45,4 +45,4 @@ Totals, date range, freshness, and thresholds are also in the README's disclosur
 The hourly workflow validates exact tooltip counts before publishing the README,
 snapshot, and both calendar SVGs together. Failed validation preserves existing
 files. Scheduled runs can be delayed. Tests cover parsing, date gaps, leap days,
-statistics, square calendar placement, idempotent updates, and failure handling.
+statistics, 3D calendar placement, idempotent updates, and failure handling.
