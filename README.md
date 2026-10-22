@@ -25,7 +25,7 @@
 <a href="https://github.com/tensorkai#year-list-container">
 <picture>
   <source media="(max-width: 640px)" srcset="./assets/contribution-observatory-mobile.svg" />
-  <img src="./assets/contribution-observatory.svg" width="100%" alt="GitHub contribution grid: 1097 contributions, 103 active days, 16-day longest streak. Past 30 days: 332; past 7 days: 91. Full text readout below." />
+  <img src="./assets/contribution-observatory.svg" width="100%" alt="GitHub contribution grid: 1102 contributions, 104 active days, 17-day longest streak. Past 30 days: 335; past 7 days: 95. Full text readout below." />
 </picture>
 </a>
 
@@ -34,18 +34,18 @@
 
 | Measurement | Reading |
 | :--- | :--- |
-| Past 365 days | 1097 contributions |
-| Days active | 103 of 365 |
-| Longest streak | 16 consecutive days in this window |
-| Past 30 days | 332 contributions |
-| Past 7 days | 91 contributions |
-| Window | 2025-10-22 → 2026-10-21 |
+| Past 365 days | 1102 contributions |
+| Days active | 104 of 365 |
+| Longest streak | 17 consecutive days in this window |
+| Past 30 days | 335 contributions |
+| Past 7 days | 95 contributions |
+| Window | 2025-10-23 → 2026-10-22 |
 | Peak day | 38 contributions · 2026-07-28 |
-| Latest day | 12 contributions · 2026-10-21 (still in progress) |
+| Latest day | 5 contributions · 2026-10-22 (still in progress) |
 
 One 3D tile per UTC day; weeks in columns, Sunday–Saturday in rows. Height and green intensity: 0, 1–3, 4–9, 10–19, 20+ contributions. Blank cells fall outside the window. The blue scanner and its four-color trail are decorative. Counts include GitHub contributions, not just commits.
 
-<sub>Last refreshed: <b>2026-10-21 23:22:06 UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>
+<sub>Last refreshed: <b>2026-10-22 04:50:50 UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>
 
 [View GitHub contribution calendar](https://github.com/tensorkai#year-list-container) · [Update history](https://github.com/tensorkai/tensorkai/actions/workflows/contribution-observatory.yml)
 
