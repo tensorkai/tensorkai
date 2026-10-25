@@ -25,7 +25,7 @@
 <a href="https://github.com/tensorkai#year-list-container">
 <picture>
   <source media="(max-width: 640px)" srcset="./assets/contribution-observatory-mobile.svg" />
-  <img src="./assets/contribution-observatory.svg" width="100%" alt="GitHub contribution grid: 1130 contributions, 106 active days, 19-day longest streak. Past 30 days: 352; past 7 days: 98. Full text readout below." />
+  <img src="./assets/contribution-observatory.svg" width="100%" alt="GitHub contribution grid: 1130 contributions, 106 active days, 19-day longest streak. Past 30 days: 346; past 7 days: 82. Full text readout below." />
 </picture>
 </a>
 
@@ -37,15 +37,15 @@
 | Past 365 days | 1130 contributions |
 | Days active | 106 of 365 |
 | Longest streak | 19 consecutive days in this window |
-| Past 30 days | 352 contributions |
-| Past 7 days | 98 contributions |
-| Window | 2025-10-25 → 2026-10-24 |
+| Past 30 days | 346 contributions |
+| Past 7 days | 82 contributions |
+| Window | 2025-10-26 → 2026-10-25 |
 | Peak day | 38 contributions · 2026-07-28 |
-| Latest day | 1 contributions · 2026-10-24 (still in progress) |
+| Latest day | 0 contributions · 2026-10-25 (still in progress) |
 
 One 3D tile per UTC day; weeks in columns, Sunday–Saturday in rows. Height and green intensity: 0, 1–3, 4–9, 10–19, 20+ contributions. Blank cells fall outside the window. The blue scanner and its four-color trail are decorative. Counts include GitHub contributions, not just commits.
 
-<sub>Last refreshed: <b>2026-10-24 22:29:41 UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>
+<sub>Last refreshed: <b>2026-10-25 01:11:57 UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>
 
 [View GitHub contribution calendar](https://github.com/tensorkai#year-list-container) · [Update history](https://github.com/tensorkai/tensorkai/actions/workflows/contribution-observatory.yml)
 
