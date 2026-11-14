@@ -79,12 +79,12 @@ export function renderMasthead({mobile=false}={}) {
   const w=mobile?600:1200,h=mobile?392:340;
   const pillars=[{label:'Code',dot:G.blue},{label:'Circuits',dot:G.red},{label:'Canvas',dot:G.yellow}];
   const body=mobile?
-    dots(34,44)+text(92,49,'Benedict Fusin · @solarkinn',15,'mu','font-weight="500"')+
+    text(24,49,'CODE / CIRCUITS / CANVAS',15,'mu','font-weight="500"')+
     wordmark(24,148,48)+illustration(482,138,.48)+
     motto(24,206,552,56,19)+
     chipRow(24,286,pillars,{size:14})+
     steps(24,360,14):
-    dots(40,44)+text(100,50,'Benedict Fusin · @solarkinn',17,'mu','font-weight="500"')+
+    text(32,50,'CODE / CIRCUITS / CANVAS',17,'mu','font-weight="500"')+
     wordmark(30,164,82)+
     motto(32,194,620,60,22)+
     chipRow(32,276,pillars,{size:14})+
