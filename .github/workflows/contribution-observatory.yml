@@ -36,7 +36,7 @@ jobs:
           package-manager-cache: false
       - name: Refresh and publish the README summary
         env:
-          PROFILE_USERNAME: tensorkai
+          PROFILE_USERNAME: solarkinn
         shell: bash
         run: |
           set -euo pipefail

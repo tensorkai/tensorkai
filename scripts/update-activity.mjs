@@ -11,7 +11,7 @@ if (offline) {
   snapshot = {username: saved.username, source: saved.source, fetchedAt: saved.fetchedAt,
     days: normalizeDays(saved.days, saved.days.at(-1).date)};
 } else {
-  const username = process.env.PROFILE_USERNAME || 'tensorkai';
+  const username = process.env.PROFILE_USERNAME || 'solarkinn';
   if (!/^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$/.test(username)) throw new Error('Invalid GitHub username');
   const source = 'https://github.com/users/' + username + '/contributions';
   const response = await fetch(source, {

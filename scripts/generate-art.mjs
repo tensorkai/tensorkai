@@ -4,7 +4,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 const out = fileURLToPath(new URL('../assets/', import.meta.url));
 mkdirSync(out, { recursive: true });
-const seed = [...'TENSORKAI / BENEDICT FUSIN'].reduce((h, c) => Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0, 2166136261);
+const seed = [...'BENEDICT FUSIN'].reduce((h, c) => Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0, 2166136261);
 const phase = (seed % 6283) / 1000;
 const paper = '#f2efe6', ink = '#202723', muted = '#62685e', orange = '#d54b25';
 const label = (x,y,t,c=muted,extra='') => `<text x="${x}" y="${y}" font-family="'Courier New',monospace" font-size="13" letter-spacing="1.2" fill="${c}" ${extra}>${t}</text>`;
@@ -28,10 +28,10 @@ const contours = Array.from({length:25},(_,layer) => {
   }).join(' ')+' Z';
   return `<path d="${d}" fill="none" stroke="${layer%5===0?'#f89b70':'#cbd1b7'}" stroke-width="${layer%5===0?1.5:0.8}" opacity="${(0.4+layer/48).toFixed(2)}"/>`;
 }).join('\n');
-const bits=[...'TENSORKAI'].flatMap(c=>c.charCodeAt(0).toString(2).padStart(8,'0').split(''));
-const marks=bits.map((b,i)=>`<rect x="${730+i*5}" y="570" width="2" height="${b==='1'?12:4}" fill="${b==='1'?orange:muted}"/>`).join('');
+const bits=[...'BENEDICT FUSIN'].flatMap(c=>c.charCodeAt(0).toString(2).padStart(8,'0').split(''));
+const marks=bits.map((b,i)=>`<rect x="${730+i*3.8}" y="570" width="2" height="${b==='1'?12:4}" fill="${b==='1'?orange:muted}"/>`).join('');
 const ticks=Array.from({length:19},(_,i)=>`<path d="M${48+i*61.33} 208v${i%3===0?10:5}" stroke="#a8aa9d"/>`).join('');
-writeFileSync(out+'signal-studio.svg',svg(1200,630,'TENSORKAI — Signal / Studio',
+writeFileSync(out+'signal-studio.svg',svg(1200,630,'BENEDICT FUSIN — Signal / Studio',
 'Benedict Fusin. From signal to something that ships. A personal contour sculpture connects AI, electronics, and art.',
 `<defs>
 <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#303b34" stroke-width="0.6"/></pattern>
@@ -43,7 +43,7 @@ writeFileSync(out+'signal-studio.svg',svg(1200,630,'TENSORKAI — Signal / Studi
 <rect x="48" y="34" width="10" height="10" fill="${orange}"/>
 ${label(72,44,'SIGNAL / STUDIO',ink)}
 ${label(1152,44,'BENEDICT FUSIN / ENGINEER + ARTIST',ink,'text-anchor="end"')}
-${text(41,183,'TENSORKAI',133,ink,'font-weight="900" letter-spacing="-7"')}
+${text(41,183,'BENEDICT FUSIN',88,ink,'font-weight="900" letter-spacing="-7"')}
 ${label(1152,130,'APPLIED ML',muted,'text-anchor="end"')}
 ${label(1152,155,'EDGE SYSTEMS',muted,'text-anchor="end"')}
 ${label(1152,180,'PRODUCT CRAFT',muted,'text-anchor="end"')}
@@ -94,12 +94,12 @@ ${text(s.x,151,s.detail,17,'#c3cabb')}`).join('\n')}
 ${label(600,200,'LEARN. REFINE. RETURN.','#f89b70','text-anchor="middle"')}`,
 '.transmit{animation:transmit 9s linear infinite}@keyframes transmit{from{stroke-dashoffset:24}to{stroke-dashoffset:-1056}}'));
 writeFileSync(out+'studio-colophon.svg',svg(1200,206,'Ship it where it actually has to run.',
-'Benedict Fusin / TENSORKAI. Code, circuits, canvas.',
+'Benedict Fusin. Code, circuits, canvas.',
 `<rect width="1200" height="206" fill="${paper}"/><rect width="8" height="206" fill="${orange}"/>
 ${label(48,39,'A NOTE TO BUILD BY',orange)}
 ${text(46,99,'Ship it where it actually has to run.',43,ink,'font-weight="700" letter-spacing="-1.5"')}
 <path d="M48 134H1152" stroke="#c1c2b5"/>
-${label(48,171,'BENEDICT FUSIN / TENSORKAI',ink)}
+${label(48,171,'BENEDICT FUSIN',ink)}
 ${label(1152,171,'CODE · CIRCUITS · CANVAS',muted,'text-anchor="end"')}
 <path d="M1070 85h66m-18-18 18 18-18 18" fill="none" stroke="${orange}" stroke-width="3"/>`));
 console.log('Generated three Signal / Studio SVG assets.');

@@ -7,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {parseCalendar,normalizeDays,summarize,renderPulse,renderSummary,updateReadme,START_MARKER,END_MARKER} from './activity.mjs';
 import {renderContributionArt} from './profile-art.mjs';
 const makeDays=(end='2026-10-10')=>Array.from({length:365},(_,i)=>({date:new Date(Date.parse(end+'T00:00:00Z')-(364-i)*86400000).toISOString().slice(0,10),count:0}));
-const snapshot=()=>({username:'tensorkai',days:makeDays(),fetchedAt:'2026-10-10T10:00:00Z'});
+const snapshot=()=>({username:'solarkinn',days:makeDays(),fetchedAt:'2026-10-10T10:00:00Z'});
 
 test('public calendar joins exact tooltip counts by ID, not intensity or order',()=>{
  const html='<td data-date="2026-10-10" id="b" data-level="1"></td><td data-date="2026-10-09" id="a"></td><tool-tip for="a">No contributions on October 9th.</tool-tip><tool-tip for="b">1,234 contributions on October 10th.</tool-tip>';
@@ -97,7 +97,7 @@ test('offline updater writes Markdown and preserves files on validation failure'
   await mkdir(join(root,'scripts'));
   await mkdir(join(root,'data'));
   for(const name of ['activity.mjs','update-activity.mjs','profile-art.mjs','field-notes.mjs'])await copyFile(new URL(name,import.meta.url),join(root,'scripts',name));
-  const data={...snapshot(),source:'https://github.com/users/tensorkai/contributions',avatarDataUrl:'old-image'};
+  const data={...snapshot(),source:'https://github.com/users/solarkinn/contributions',avatarDataUrl:'old-image'};
   const dataPath=join(root,'data','contributions.json');
   const readmePath=join(root,'README.md');
   await writeFile(dataPath,JSON.stringify(data));

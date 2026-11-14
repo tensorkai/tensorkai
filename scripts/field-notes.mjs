@@ -1,18 +1,17 @@
 // Code / Circuits / Canvas: original, dependency-free SVG artwork.
-// Google-inspired (Material 3) language: four-color accents, tonal surfaces,
-// pill shapes, and automatic light/dark themes via prefers-color-scheme.
+// Personal studio palette, system typography, and automatic light/dark themes.
 import {normalizeDays, summarize} from './activity.mjs';
 
-const G = {blue:'#4285f4', red:'#ea4335', yellow:'#fbbc04', green:'#34a853'};
-const SANS = "'Google Sans','Google Sans Text','Product Sans',Roboto,'Segoe UI','Helvetica Neue',Arial,sans-serif";
-const MONO = "'Google Sans Mono','Roboto Mono',Consolas,monospace";
+const G = {blue:'#28766e', red:'#a46b50', yellow:'#b29862', green:'#658777'};
+const SANS = "'Segoe UI','Helvetica Neue',Arial,sans-serif";
+const MONO = "Consolas,'Courier New',monospace";
 // Theme tokens as [light, dark]. Each becomes a CSS class; the light value is
 // also written as a presentation attribute so CSS-less renderers stay legible.
 const T = {
-  bg:['#ffffff','#131314'], c1:['#f8fafd','#1b1c1d'], c2:['#f0f4f9','#1e1f20'], c3:['#e9eef6','#282a2c'],
+  bg:['#ffffff','#131314'], c1:['#f7f7f2','#1b1c1d'], c2:['#eef1eb','#1e1f20'], c3:['#e5ebe2','#282a2c'],
   ink:['#1f1f1f','#e3e3e3'], mu:['#5f6368','#9aa0a6'], ol:['#dadce0','#3c4043'],
-  ac:['#0b57d0','#a8c7fa'], acc:['#d3e3fd','#0842a0'], onacc:['#041e49','#d3e3fd'],
-  l0:['#ebeef2','#282a2c'], l1:['#ceead6','#0d4f22'], l2:['#81c995','#137333'], l3:['#34a853','#34a853'], l4:['#137333','#81c995'],
+  ac:['#25685f','#a6d5c7'], acc:['#dcece5','#244b43'], onacc:['#163f37','#dcece5'],
+  l0:['#ebeef2','#282a2c'], l1:['#d6e6dc','#0d4f22'], l2:['#9dc6ae','#376e56'], l3:['#658777','#658777'], l4:['#376e56','#9dc6ae'],
 };
 const css = () => {
   const set = i => Object.entries(T).map(([k,v])=>`.${k}{fill:${v[i]}}.s-${k}{stroke:${v[i]}}`).join('');
@@ -50,17 +49,11 @@ const chipRow = (x,y,items,{align='start',gap=8,...opts}={}) => {
   return items.map((it,i)=>{const out=chip(cursor,y,it.label,{...opts,...it}); cursor+=widths[i]+gap; return out;}).join('');
 };
 
-const WORD=[...'tensorkai'], WORD_COLORS=[G.blue,G.red,G.yellow,G.blue,G.green,G.red,G.blue,G.yellow,G.green];
-const wordmark = (x,y,size) => `<text x="${x}" y="${y}" font-size="${size}" font-weight="500" letter-spacing="${(-size*.02).toFixed(1)}">${WORD.map((c,i)=>`<tspan fill="${WORD_COLORS[i]}">${c}</tspan>`).join('')}</text>`;
+const wordmark = (x,y,size) => text(x,y,'Benedict Fusin',size,'ink','font-weight="700" letter-spacing="-2"');
 
-const searchBar = (x,y,w,h,size) => {
-  const r=h/2, cy=y+r, lens=size*.34;
-  return `<g filter="url(#lift)">${rect(x,y,w,h,'c1',`rx="${r}"`,'ol')}</g>`+
-    `<g fill="none" stroke-width="2.4" stroke-linecap="round" ${paint(null,'mu')}><circle cx="${x+r}" cy="${cy-2}" r="${lens}"/><path d="M${(x+r+lens*.72).toFixed(1)} ${(cy-2+lens*.72).toFixed(1)}l${(size*.28).toFixed(1)} ${(size*.28).toFixed(1)}"/></g>`+
-    `<text x="${x+r+size*1.05}" y="${(cy+size*.36).toFixed(1)}" font-size="${size}" ${paint('ink')}>Turning “what if” into <tspan font-weight="500" ${paint('ac')}>“it works.”</tspan></text>`+
-    `<circle cx="${x+w-r}" cy="${cy}" r="${r-8}" fill="${G.blue}"/>`+
-    `<path d="M${x+w-r-size*.32} ${cy}h${size*.64}m${-size*.26} ${-size*.26} ${size*.26} ${size*.26} ${-size*.26} ${size*.26}" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
-};
+const motto = (x,y,w,h,size) =>
+  rect(x,y,3,h,'ac')+
+  text(x+18,y+h/2+size*.36,'Turning “what if” into “it works.”',size,'mu');
 
 // Layered shapes: a microchip, a sweep of paint, and a spark of intelligence.
 const illustration = (cx,cy,scale) => `<g transform="translate(${cx} ${cy}) scale(${scale})" aria-hidden="true">
@@ -86,18 +79,18 @@ export function renderMasthead({mobile=false}={}) {
   const w=mobile?600:1200,h=mobile?392:340;
   const pillars=[{label:'Code',dot:G.blue},{label:'Circuits',dot:G.red},{label:'Canvas',dot:G.yellow}];
   const body=mobile?
-    dots(34,44)+text(92,49,'Benedict Fusin · @tensorkai',15,'mu','font-weight="500"')+
-    wordmark(24,148,72)+illustration(482,138,.48)+
-    searchBar(24,206,552,56,19)+
+    dots(34,44)+text(92,49,'Benedict Fusin · @solarkinn',15,'mu','font-weight="500"')+
+    wordmark(24,148,48)+illustration(482,138,.48)+
+    motto(24,206,552,56,19)+
     chipRow(24,286,pillars,{size:14})+
     steps(24,360,14):
-    dots(40,44)+text(100,50,'Benedict Fusin · @tensorkai',17,'mu','font-weight="500"')+
-    wordmark(30,164,108)+
-    searchBar(32,194,620,60,22)+
+    dots(40,44)+text(100,50,'Benedict Fusin · @solarkinn',17,'mu','font-weight="500"')+
+    wordmark(30,164,82)+
+    motto(32,194,620,60,22)+
     chipRow(32,276,pillars,{size:14})+
     steps(362,298,16)+
     illustration(965,172,1);
-  return svg(w,h,'TENSORKAI — Code / Circuits / Canvas','Benedict Fusin. Turning what if into it works. AI, embedded systems, and art.',body,
+  return svg(w,h,'BENEDICT FUSIN — Code / Circuits / Canvas','Benedict Fusin. Turning what if into it works. AI, embedded systems, and art.',body,
     `.float-a{animation:float 8s ease-in-out infinite}.float-b{animation:float 9s ease-in-out -3s infinite}.float-c{animation:drift 7s ease-in-out infinite}`+
     `.twinkle{transform-box:fill-box;transform-origin:center;animation:twinkle 4s ease-in-out infinite}`+
     `@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}`+
@@ -169,7 +162,7 @@ export function renderContributionArt(snapshot,{mobile=false}={}) {
       `<path class="tile-top l${level(d.count)}" data-height="${z}" d="${face(x,y-z)}" fill="${T['l'+level(d.count)][0]}"/>`+
       `<path d="M${x} ${y-z}h${tile}l${tile*.45} ${tile*.72}" fill="none" stroke="#ffffff" stroke-opacity=".3" stroke-width=".6"/></g>`;
   }).join('');
-  // A blue scanner with a four-color trail follows a serpentine route through
+  // A teal scanner with a muted trail follows a serpentine route through
   // actual calendar cells. It is separate from the immutable data tiles.
   const route=days.map((d,i)=>({col:Math.floor((i+offset)/7),row:(i+offset)%7,count:d.count}))
     .sort((a,b)=>a.col-b.col||(a.col%2?b.row-a.row:a.row-b.row));

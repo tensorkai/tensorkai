@@ -22,7 +22,7 @@
 
 ### A little, often. A lot, eventually.
 
-<a href="https://github.com/tensorkai#year-list-container">
+<a href="https://github.com/solarkinn#year-list-container">
 <picture>
   <source media="(max-width: 640px)" srcset="./assets/contribution-observatory-mobile.svg" />
   <img src="./assets/contribution-observatory.svg" width="100%" alt="GitHub contribution grid: 1225 contributions, 118 active days, 19-day longest streak. Past 30 days: 218; past 7 days: 3. Full text readout below." />
@@ -43,17 +43,17 @@
 | Peak day | 38 contributions · 2026-07-28 |
 | Latest day | 0 contributions · 2026-11-14 (still in progress) |
 
-One 3D tile per UTC day; weeks in columns, Sunday–Saturday in rows. Height and green intensity: 0, 1–3, 4–9, 10–19, 20+ contributions. Blank cells fall outside the window. The blue scanner and its four-color trail are decorative. Counts include GitHub contributions, not just commits.
+One 3D tile per UTC day; weeks in columns, Sunday–Saturday in rows. Height and green intensity: 0, 1–3, 4–9, 10–19, 20+ contributions. Blank cells fall outside the window. The teal scanner and its muted trail are decorative. Counts include GitHub contributions, not just commits.
 
 <sub>Last refreshed: <b>2026-11-14 11:29:52 UTC</b> · Scheduled hourly; GitHub may delay runs.</sub>
 
-[View GitHub contribution calendar](https://github.com/tensorkai#year-list-container) · [Update history](https://github.com/tensorkai/tensorkai/actions/workflows/contribution-observatory.yml)
+[View GitHub contribution calendar](https://github.com/solarkinn#year-list-container) · [Update history](https://github.com/solarkinn/solarkinn/actions/workflows/contribution-observatory.yml)
 
 </details>
 
 <!-- CONTRIBUTIONS:END -->
 
-**Leave with something:** [IoT roadmap](https://github.com/tensorkai/Internet-of-Things-Roadmap) · [ML for everyone](https://github.com/tensorkai/ml-4-everyone) · [Python practice](https://github.com/tensorkai/All-About-Python)
+**Leave with something:** [IoT roadmap](https://github.com/solarkinn/Internet-of-Things-Roadmap) · [ML for everyone](https://github.com/solarkinn/ml-4-everyone) · [Python practice](https://github.com/solarkinn/All-About-Python)
 
 ---
 

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="480" viewBox="0 0 1280 480" role="img" aria-labelledby="title desc">
-  <title id="title">TENSORKAI — Code, circuits, canvas</title>
+  <title id="title">BENEDICT FUSIN — Code, circuits, canvas</title>
   <desc id="desc">A static studio masthead for Benedict Fusin. Bold cream typography meets an orange circuit and contour drawing. From an idea to something that works.</desc>
   <defs>
     <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#f3eddb" stroke-opacity=".12" stroke-width="1"/></pattern>
@@ -12,8 +12,8 @@
     <text x="1232" y="38" text-anchor="end">INDEPENDENT MIND. CONNECTED DISCIPLINES.</text>
   </g>
   <g font-family="Arial, Helvetica, sans-serif" font-weight="900" fill="#f3eddb" letter-spacing="-7">
-    <text x="42" y="191" font-size="136">TENSOR</text>
-    <text x="42" y="337" font-size="170">KAI<tspan fill="#ed8959">.</tspan></text>
+    <text x="42" y="191" font-size="120">BENEDICT</text>
+    <text x="42" y="337" font-size="100">FUSIN<tspan fill="#ed8959">.</tspan></text>
   </g>
   <path d="M426 232H468M447 211V253" stroke="#ed8959" stroke-width="2"/>
   <g font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#f3eddb">
