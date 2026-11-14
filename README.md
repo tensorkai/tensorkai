@@ -1,6 +1,6 @@
 <picture>
   <source media="(max-width: 640px)" srcset="./assets/masthead-mobile.svg" />
-  <img src="./assets/masthead.svg" width="100%" alt="TENSORKAI / Benedict Fusin — Code, Circuits, Canvas. Turning what if into it works." />
+  <img src="./assets/masthead.svg" width="100%" alt="Solarkinn / Benedict Fusin — Code, Circuits, Canvas. Turning what if into it works." />
 </picture>
 
 **I'm Benedict. I give ideas somewhere to live:** a model, a microcontroller, a screen, sometimes a canvas. Electronics Engineering at **PUP Sta. Mesa**; AI & Edge AI Product Integrator at **Loompoint AI**.
